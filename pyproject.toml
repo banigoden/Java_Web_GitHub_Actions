@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "java-web"
+version = "0.1.0"
+description = "ansible + terraform + JavaWeb + AWS with prometeous and grafana for logs"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-terraform = "^0.10.1"
+ansible = "^9.2.0"
+psycopg2-binary = {version = "^2.9.6", extras = ["postgres"]}
+pre-commit = "^3.6.2"
+
+
+[tool.poetry.group.dev.dependencies]
+commitizen = "^3.15.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+terraform = "python -m terraform.cli"
+ansible = "ansible-playbook"

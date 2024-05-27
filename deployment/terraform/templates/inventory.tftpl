@@ -1,0 +1,7 @@
+[all]
+myvm ansible_host=${instance_public_ip}
+
+[all:vars]
+ansible_user=ec2-user
+region=${region}
+token=${GIT_TOKEN_MY}

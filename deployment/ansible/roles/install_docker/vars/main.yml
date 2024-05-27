@@ -1,0 +1,34 @@
+---
+install_docker_apt_packages:
+  - python3-pip
+  - pipenv
+  - git
+  - libsasl2-dev
+  - libldap2-dev
+  - libssl-dev
+  - python-setuptools
+  - corkscrew
+  - python3-dev
+  - docker-ce
+  - mysql-client-core-8.0
+  - docker-compose
+  - jq
+
+install_docker_pip_modules:
+  - passlib
+  - docker
+  - docker-compose
+  - pymysql
+
+install_docker_redhat_packages:
+  - python3-pip
+  - python3-devel
+  - python3-setuptools
+  - git
+  - jq
+  - vim
+  - libicu
+
+install_docker_pip_modules_red:
+  - passlib
+  - pymysql
