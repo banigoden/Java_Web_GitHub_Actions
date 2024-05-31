@@ -31,7 +31,7 @@ variable "ami_number" {
 
 variable "instance_name" {
   type    = string
-  default = "java"
+  default = "web_app"
 }
 
 variable "size" {

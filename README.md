@@ -14,48 +14,15 @@ a Jinja2 template.
 
 ## Requirements
 
+- AWS account
 - Terraform >= 1.0.4
 - Ansible core >= 2.0
 - Poetry
+- AWS CLI tool
+- pylinter
+- Docker on host OS
 
 ## How to
-
-1. **Poetry Environment Setup**
-  - Create a Poetry environment:
-
-    ```bash
-    poetry env create
-    ```
-
-2. **Pre-commit Hooks**
-  - Install pre-commit hooks:
-
-    ```bash
-    pre-commit install
-    ```
-
-3. **Conventional Commit Messages**
-- Install `cz` for conventional commit messages:
-
-    ```bash
-    npm install -g commitizen
-    ```
-
-4. **Terraform Deployment**
-- Deploy VM using Terraform (ensure correct environment variables
-   in the `.env` file):
-
-    ```bash
-    terraform apply
-    ```
-
-5. **Ansible Installation of GitHub Runner**
-- **Create User and Home Directory (Ansible Role)**
-- Execute the following command:
-
-  ```bash
-  ansible-playbook playbook.yml --tags install_github_runner
-  ```
 
 - **Install GitHub Runner Agent**
 - **Manual Installation:**

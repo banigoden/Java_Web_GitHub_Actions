@@ -14,7 +14,7 @@ def get_item(item_id: int):
         return items[item_id - 1]
     except IndexError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='item does not exists')
-    
+
 @app.post('/items')
 def create_item(name: str, coast: float, in_stock: bool):
     global items_id
@@ -42,7 +42,7 @@ def patch_item(item_id: int, new_name: str = None, new_coast: float = None, new_
             return items[item_id - 1]
     except IndexError:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='item does not exists')
-    
+
 @app.put('/items')
 def patch_item(item_id: int, new_name: str, new_coast: float, new_in_stock: bool):
     try:
