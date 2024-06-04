@@ -1,3 +1,0 @@
----
-install_github_runner_github_repo_token: "your_token_here"
-install_github_runner_actions_runner_version: "2.315.0"

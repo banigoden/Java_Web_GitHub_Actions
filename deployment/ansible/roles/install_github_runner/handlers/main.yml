@@ -1,7 +1,0 @@
----
-- name: Reload systemd
-  ansible.builtin.systemd:
-    name: github-runner
-    state: restarted
-    enabled: true
-    daemon_reload: true

@@ -15,9 +15,9 @@ resource "local_sensitive_file" "pem_files" {
   content              = tls_private_key.ec2_key.private_key_pem
 }
 
-resource "aws_instance" "java" {
+resource "aws_instance" "web_app" {
   ami                         = var.ami_number
-  instance_type               = var.size
+  instance_type               = var.vm_size
   key_name                    = aws_key_pair.ssh_key.key_name
   vpc_security_group_ids      = [aws_security_group.allow_ssh.id]
   subnet_id                   = aws_subnet.public_subnet.id
@@ -28,15 +28,3 @@ resource "aws_instance" "java" {
   }
 
 }
-
-# resource "null_resource" "run_ansible" {
-#   depends_on = [aws_instance.django]
-
-#   provisioner "local-exec" {
-#     command = "sleep 20"
-#   }
-
-#   provisioner "local-exec" {
-#     command = "ansible-playbook -i ${path.module}./ansible/inventory/ansible-inventory ${path.module}./ansible/playbook.yml --private-key ${path.module}./ansible/EC2-django.pem --user ec2-user -e install_github_runner_github_repo_token=${var.GIT_TOKEN}"
-#   }
-# }

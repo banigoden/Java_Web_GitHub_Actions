@@ -17,3 +17,5 @@ requirements.txt
 *.tfstate.backup
 /env_file.env
 *.sh
+*.toml
+*.lock

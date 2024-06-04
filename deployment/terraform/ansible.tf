@@ -5,9 +5,9 @@ resource "local_file" "inventory" {
   content = templatefile("${path.module}/templates/inventory.tftpl",
     {
       region             = var.aws_region
-      instance_public_ip = aws_instance.java.public_ip
+      instance_public_ip = aws_instance.web_app.public_ip
       GIT_TOKEN_MY       = var.GIT_TOKEN
     }
   )
-  depends_on = [aws_instance.java]
+  depends_on = [aws_instance.web_app]
 }

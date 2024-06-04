@@ -34,10 +34,16 @@ variable "instance_name" {
   default = "web_app"
 }
 
-variable "size" {
+variable "vm_size" {
   type    = string
   default = "t2.micro"
 }
+
+# variable "environment" {
+#   type        = string
+#   description = "Deployment environment (e.g., dev, prod)"
+#   default     = "dev"
+# }
 
 variable "GIT_TOKEN" {
   type        = string
