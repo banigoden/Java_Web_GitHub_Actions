@@ -50,3 +50,12 @@ a Jinja2 template.
 ## License
 
 This project is licensed under the GNU GPL v3.
+
+task
+
+1) workflow - pre-commit - every commit runn all files check linters, only when pre commit, for
+all branch, except main. docker. hide secrets . main workflow run mannualy.
+2) Check grape binary. configure - exit code when high risk
+3) deploy vm
+4) ansible - main workflow docker image собрать локально, stage build, push git hub. token для
+контейнера/ need counter in git for ansible version. docker compose login github

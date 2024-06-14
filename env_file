@@ -15,17 +15,17 @@ echo "Choose VM size:
 5) t3.small
 6) t3.medium
 "
-read -p 'Choose VM size (1-6): ' vm_size_choice
-case $vm_size_choice in
-1) echo "::set-output name=vm_size::t2.micro" ;;
-2) echo "::set-output name=vm_size::t2.small" ;;
-3) echo "::set-output name=vm_size::t2.medium" ;;
-4) echo "::set-output name=vm_size::t3.micro" ;;
-5) echo "::set-output name=vm_size::t3.small" ;;
-6) echo "::set-output name=vm_size::t3.medium" ;;
-*) echo "Invalid choice"; exit 1 ;;
-esac
-export VM_SIZE
+# read -p 'Choose VM size (1-6): ' vm_size_choice
+# case $vm_size_choice in
+# 1) echo "::set-output name=vm_size::t2.micro" ;;
+# 2) echo "::set-output name=vm_size::t2.small" ;;
+# 3) echo "::set-output name=vm_size::t2.medium" ;;
+# 4) echo "::set-output name=vm_size::t3.micro" ;;
+# 5) echo "::set-output name=vm_size::t3.small" ;;
+# 6) echo "::set-output name=vm_size::t3.medium" ;;
+# *) echo "Invalid choice"; exit 1 ;;
+# esac
+# export VM_SIZE
 
 echo "Choose region:
 1) us-east-1

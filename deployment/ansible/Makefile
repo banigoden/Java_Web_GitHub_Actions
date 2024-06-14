@@ -7,14 +7,13 @@ play:
 	@echo "Running Ansible playbook..."
 	ansible-playbook -i ./inventory/ansible-inventory playbook.yml --private-key EC2-web_app.pem --user ec2-user
 
-# init:
-# 	@echo "Initializing Ansible environment..."
-# 	ansible-galaxy install -r requirements.yml
+init:
+	@echo "Initializing Ansible environment..." for modules /ansible, collections
+	ansible-galaxy install -r ./collections/requirements.yml
 
 dry:
 	@echo "Performing dry-run of Ansible playbook..."
 	ansible-playbook -i ./inventory/ansible-inventory playbook.yml --private-key EC2-web_app.pem --user ec2-user --check
-
 
 clean:
 	@echo "Cleaning up..."

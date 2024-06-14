@@ -5,19 +5,19 @@ ENVIRONMENT ?= dev
 .PHONY: init destroy plan validate apply play clean
 
 plan:
-	terraform plan -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars -var "vm_size=$(VM_SIZE)"
+	terraform plan -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 validate:
 	terraform validate
 
 apply:
-	terraform apply -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars -var "vm_size=$(VM_SIZE)"
+	terraform apply -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 init:
-	terraform apply -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars -var "vm_size=$(VM_SIZE)"
+	terraform apply -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 destroy:
-	terraform destroy -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars -var "vm_size=$(VM_SIZE)"
+	terraform destroy -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 clean:
 	rm -rf ./deployment/terraform/.terraform
