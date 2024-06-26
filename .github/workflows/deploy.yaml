@@ -3,11 +3,11 @@ name: Deploy Infrastructure and Web Application
 
 on: [push, pull_request] # yamllint disable-line rule:truthy
 
-# env:
-#   AWS_REGION: 'us-west-2'
-#   IMAGE_NAME: 'banigoden/web_app'
-#   IMAGE_VERSION: ${{ github.run_number }}
-#   BRANCH_NAME: ${{ github.ref_name }}
+env:
+  AWS_REGION: 'us-west-2'
+  IMAGE_NAME: 'ghcr.io/banigoden/web_app-ghcr'
+  IMAGE_VERSION: ${{ github.run_number }}
+  BRANCH_NAME: ${{ github.ref_name }}
 
 jobs:
   deploy:
@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2 
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -30,6 +30,7 @@ jobs:
         run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} .
 
       - name: Push Docker Image to Registry
+        id: push
         run: |
           docker tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
           docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
