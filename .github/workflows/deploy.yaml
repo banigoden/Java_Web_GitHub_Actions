@@ -27,14 +27,17 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build Docker Image
-        run: |
-          docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} .
+        run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} .
 
       - name: Push Docker Image to Registry
         run: |
           docker tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
           docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
+      - name: Install make
+      # yamllint disable-line rule:line-length
+        run: apk add --no-cache make && wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask && chmod 755 /usr/bin/tfmask
+  
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -52,6 +55,10 @@ jobs:
         id: init
         run: terraform init
         working-directory: .deployment/terraform
+
+      - name: Terraform Plan
+        id: plan
+        run: make plan
 
       - name: Apply Terraform
         run: terraform apply -auto-approve
