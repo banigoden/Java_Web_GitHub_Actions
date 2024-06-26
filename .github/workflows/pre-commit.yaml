@@ -14,7 +14,7 @@ on:
 jobs:
   pre-commit:
     runs-on:
-      - self-hosted
+      - linux
     container:
       image: ghcr.io/banigoden/web_app-ghcr:latest
       credentials:
