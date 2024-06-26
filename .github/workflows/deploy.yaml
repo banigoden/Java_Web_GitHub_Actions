@@ -3,11 +3,11 @@ name: Deploy Infrastructure and Web Application
 
 on: [push, pull_request] # yamllint disable-line rule:truthy
 
-env:
-  AWS_REGION: 'us-west-2'
-  IMAGE_NAME: 'banigoden/web_app'
-  IMAGE_VERSION: ${{ github.run_number }}
-  BRANCH_NAME: ${{ github.ref_name }}
+# env:
+#   AWS_REGION: 'us-west-2'
+#   IMAGE_NAME: 'banigoden/web_app'
+#   IMAGE_VERSION: ${{ github.run_number }}
+#   BRANCH_NAME: ${{ github.ref_name }}
 
 jobs:
   deploy:
@@ -43,14 +43,15 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
 
-      - name: Initialize Terraform
-        run: terraform init
-        working-directory: .deployment/terraform
-
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
         continue-on-error: true
+
+      - name: Initialize Terraform
+        id: init
+        run: terraform init
+        working-directory: .deployment/terraform
 
       - name: Apply Terraform
         run: terraform apply -auto-approve
