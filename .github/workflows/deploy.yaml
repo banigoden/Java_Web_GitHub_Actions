@@ -40,7 +40,7 @@ jobs:
 
       - name: Tag Docker Image
         run: |
-          docker build --tag ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          docker build --tag ghcr.io/banigoden/web_app-ghcr:latest
 
       - name: Push Docker Image to Registry
         run: |
