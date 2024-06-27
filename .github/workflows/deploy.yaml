@@ -58,16 +58,8 @@ jobs:
       #     docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Install make
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y make wget
-          wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
-          chmod 755 /usr/bin/tfmask
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
+        # yamllint disable-line rule:line-length
+        run: sudo apk add --no-cache make && wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask && sudo chmod 755 /usr/bin/tfmask
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
