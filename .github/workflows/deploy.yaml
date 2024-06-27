@@ -66,9 +66,9 @@ jobs:
         id: plan
         run: make plan
 
-#       - name: Apply Terraform
-#         run: terraform apply -auto-approve
-#         working-directory: .deployment/terraform
+      - name: Apply Terraform
+        run: terraform apply -auto-approve
+        working-directory: .deployment/terraform
 
 #       - name: Install Ansible
 #         run: |
