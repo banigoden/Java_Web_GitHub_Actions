@@ -1,7 +1,7 @@
 ---
 name: Deploy Infrastructure and Web Application
 
-on: [push, pull_request] # yamllint disable-line rule:truthy
+on: workflow_dispatch # yamllint disable-line rule:truthy
 
 env:
   AWS_REGION: 'us-west-2'
@@ -15,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2 
+        uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -25,7 +25,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
+
       - name: Build Docker Image
         run: |
           cd deployment/docker \
@@ -34,13 +34,16 @@ jobs:
       - name: Push Docker Image to Registry
         id: push
         run: |
-          docker tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          docker tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} \
+          ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
           docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Install make
-      # yamllint disable-line rule:line-length
-        run: apk add --no-cache make && wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask && chmod 755 /usr/bin/tfmask
-  
+        run: |
+          apk add --no-cache make
+          wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
+          chmod 755 /usr/bin/tfmask
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -75,23 +78,4 @@ jobs:
       - name: Run Ansible Playbook
         env:
           ANSIBLE_HOST_KEY_CHECKING: 'false'
-        run: |
-          ansible-playbook deploy.yml -i inventory
-
-      # - name: Build Docker Image
-      #   run: |
-      #     docker build -t ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} . //ghcr.io/banigoden/web_app-ghcr:latest
-
-      # - name: Push Docker Image to Registry
-      #   run: |
-      #     docker login -u ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD}}
-      #     docker build . -t ghcr.io/banigoden/web_app-ghcr:latest
-      #     docker push ghcr.io/banigoden/web_app-ghcr:latest
-
-      # - name: Bring up Docker Compose services
-      #   run: |
-      #     ssh user@your_server "cd /path/to/remote && docker-compose up -d"
-
-      # - name: Bring down Docker Compose services
-      #   run: |
-      #     ssh user@your_server "cd /path/to/remote && docker-compose down"
+        run: ansible-playbook deploy.yml -i inventory

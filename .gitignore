@@ -9,7 +9,6 @@
 /deployment/ansible/*.pem
 __pycache__/
 terraform.tfstate.backup
-requirements.txt
 .idea/
 .DS_Store
 *.env
