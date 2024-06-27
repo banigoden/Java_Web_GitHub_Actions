@@ -42,7 +42,7 @@ jobs:
         run: |
           cd deployment/docker \
           && docker build . -t ghcr.io/banigoden/web_app-ghcr:latest
-          && docker push ghcr.io/banigoden/web_app-ghcr:latest
+          docker push ghcr.io/banigoden/web_app-ghcr:latest
       # - name: Push Docker Image to Registry
       #   run: |
       #     docker build . -t ghcr.io/banigoden/web_app-ghcr:latest
