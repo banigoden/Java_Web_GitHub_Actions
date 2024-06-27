@@ -59,7 +59,8 @@ jobs:
 
       - name: Install make
         run: |
-          apk add --no-cache make
+          sudo apt-get update
+          sudo apt-get install -y make wget
           wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
           chmod 755 /usr/bin/tfmask
 
