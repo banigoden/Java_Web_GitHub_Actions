@@ -41,7 +41,7 @@ jobs:
       - name: Push Docker Image to Registry
         id: push
         run: |
-          docker tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} \
+          docker tag ghcr.io/banigoden/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} \
           ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
           docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
