@@ -57,14 +57,14 @@ jobs:
         run: terraform fmt -check
         continue-on-error: true
 
-#       - name: Initialize Terraform
-#         id: init
-#         run: terraform init
-#         working-directory: .deployment/terraform
+      - name: Initialize Terraform
+        id: init
+        run: terraform init
+        working-directory: .deployment/terraform
 
-#       - name: Terraform Plan
-#         id: plan
-#         run: make plan
+      - name: Terraform Plan
+        id: plan
+        run: make plan
 
 #       - name: Apply Terraform
 #         run: terraform apply -auto-approve
