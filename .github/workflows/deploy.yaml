@@ -38,6 +38,11 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
 
+      - name: Push Docker Image to Registry
+        run: |
+          docker login --username ${{github.actor}} --password ${{secrets.GITHUB_TOKEN}}
+          docker build . -t ghcr.io/banigoden/web_app-ghcr:latest
+          docker push ghcr.io/banigoden/web_app-ghcr:latest
       # - name: Push Docker Image to Registry
       #   run: |
       #     docker build . -t ghcr.io/banigoden/web_app-ghcr:latest
@@ -48,15 +53,15 @@ jobs:
       #     docker tag ghcr.io/banigoden/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} \
       #     ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
       #     docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-      - name: Build Docker image
-        uses: mr-smithers-excellent/docker-build-push@v6.2
-        with:
-          image: ${{env.image_name}}
-          tags: $GITHUB_RUN_NUMBER
-          registry: ghcr.io
-          dockerfile: dockerfile
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      # - name: Build Docker image
+      #   uses: mr-smithers-excellent/docker-build-push@v6.2
+      #   with:
+      #     image: ${{env.image_name}}
+      #     tags: $GITHUB_RUN_NUMBER
+      #     registry: ghcr.io
+      #     dockerfile: dockerfile
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Install make
         run: |
