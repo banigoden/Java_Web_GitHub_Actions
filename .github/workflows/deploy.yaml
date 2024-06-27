@@ -40,7 +40,8 @@ jobs:
 
       - name: Tag Docker Image
         run: |
-          docker build -t ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          docker tag ${{ secrets.DOCKER_USERNAME }}/web_app-ghcr:${{ env.IMAGE_VERSION }} \
+          ghcr.io/${{ secrets.DOCKER_USERNAME }}/web_app-ghcr:${{ env.IMAGE_VERSION }}
 
       - name: Push Docker Image to Registry
         run: |
