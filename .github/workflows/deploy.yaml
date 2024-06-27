@@ -40,8 +40,7 @@ jobs:
 
       - name: Tag Docker Image
         run: |
-          docker tag ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} ghcr.io/${{ secrets.DOCKER_USERNAME }}/ \
-          ${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          docker build -t ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Push Docker Image to Registry
         run: |
@@ -59,10 +58,10 @@ jobs:
           wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
           chmod 755 /usr/bin/tfmask
 
-      # - name: Set up Python
-      #   uses: actions/setup-python@v2
-      #   with:
-      #     python-version: '3.x'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v1
