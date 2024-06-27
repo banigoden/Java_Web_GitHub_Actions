@@ -1,7 +1,7 @@
 ---
 name: Deploy Infrastructure and Web Application
 
-on: workflow_dispatch # yamllint disable-line rule:truthy
+on: [push, workflow_dispatch] # yamllint disable-line rule:truthy
 
 env:
   AWS_REGION: 'us-west-2'
