@@ -5,7 +5,7 @@ on: [push, workflow_dispatch] # yamllint disable-line rule:truthy
 
 env:
   AWS_REGION: 'us-west-2'
-  IMAGE_NAME: 'web_app-ghcr'
+  IMAGE_NAME: 'banigoden/web_app-ghcr'
   IMAGE_VERSION: 'latest'
   BRANCH_NAME: ${{ github.ref_name }}
 
