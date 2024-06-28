@@ -4,7 +4,7 @@ name: Deploy Infrastructure and Web Application
 on: [push, workflow_dispatch] # yamllint disable-line rule:truthy
 
 env:
-  AWS_REGION: 'us-west-2'
+  AWS_REGION: 'eu-central-1'
   IMAGE_NAME: 'web_app-ghcr'
   IMAGE_VERSION: 'latest'
   BRANCH_NAME: ${{ github.ref_name }}
@@ -44,18 +44,8 @@ jobs:
       - name: Push Docker Image to Registry
         run: |
           cd deployment/docker \
-          && docker build . -t ghcr.io/banigoden/web_app-ghcr:latest
-          docker push ghcr.io/banigoden/web_app-ghcr:latest
-      # - name: Push Docker Image to Registry
-      #   run: |
-      #     docker build . -t ghcr.io/banigoden/web_app-ghcr:latest
-      #     docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-      # - name: Push Docker Image to Registry
-      #   id: push
-      #   run: |
-      #     docker tag ghcr.io/banigoden/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }} \
-      #     ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-      #     docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          && docker build . -t ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Install make and tfmask
         run: |
@@ -81,10 +71,11 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: make plan
+        working-directory: deployment/terraform
 
       - name: Apply Terraform
         run: terraform apply -auto-approve
-        working-directory: .deployment/terraform
+        working-directory: deployment/terraform
 
       - name: Install Ansible
         run: |

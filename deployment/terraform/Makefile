@@ -4,6 +4,9 @@ ENVIRONMENT ?= dev
 
 .PHONY: init destroy plan validate apply play clean
 
+init:
+	terraform init
+
 plan:
 	terraform plan -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
@@ -12,9 +15,6 @@ validate:
 
 apply:
 	terraform apply -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
-
-init:
-	terraform init
 
 destroy:
 	terraform destroy -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
