@@ -4,6 +4,8 @@ name: Deploy Infrastructure and Web Application
 on: [push, workflow_dispatch] # yamllint disable-line rule:truthy
 
 env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: 'eu-central-1'
   IMAGE_NAME: 'web_app-ghcr'
   IMAGE_VERSION: 'latest'
@@ -55,7 +57,7 @@ jobs:
           sudo chmod 755 /usr/bin/tfmask
 
       - name: Install Terraform
-        uses: hashicorp/setup-terraform@v1
+        uses: hashicorp/setup-terraform@v2
 
       - name: Terraform fmt
         id: fmt
