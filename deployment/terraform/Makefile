@@ -14,7 +14,7 @@ apply:
 	terraform apply -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 init:
-	terraform apply -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
+	terraform init
 
 destroy:
 	terraform destroy -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
