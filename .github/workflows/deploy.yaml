@@ -44,8 +44,8 @@ jobs:
       - name: Push Docker Image to Registry
         run: |
           cd deployment/docker \
-          && docker build . -t ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-          docker push ghcr.io/${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          && docker build . -t ghcr.io/banigoden/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          docker push ghcr.io/banigoden/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
 
       - name: Install make and tfmask
         run: |
