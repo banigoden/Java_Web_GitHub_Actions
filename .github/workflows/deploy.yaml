@@ -68,10 +68,10 @@ jobs:
         run: make init
         working-directory: deployment/terraform
 
-      - name: Terraform Plan
-        id: plan
-        run: make plan
-        working-directory: deployment/terraform
+      # - name: Terraform Plan
+      #   id: plan
+      #   run: make plan
+      #   working-directory: deployment/terraform
 
       - name: Apply Terraform
         run: terraform apply -auto-approve
