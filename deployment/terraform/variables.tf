@@ -39,11 +39,11 @@ variable "vm_size" {
   default = "t2.micro"
 }
 
-# variable "environment" {
-#   type        = string
-#   description = "Deployment environment (e.g., dev, prod)"
-#   default     = "dev"
-# }
+variable "environment" {
+  type        = string
+  description = "Deployment environment (e.g., dev, prod)"
+  default     = "dev"
+}
 
 variable "GIT_TOKEN" {
   type        = string

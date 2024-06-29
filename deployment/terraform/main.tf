@@ -24,7 +24,8 @@ resource "aws_instance" "web_app" {
   associate_public_ip_address = true
 
   tags = {
-    Name = "web-production"
+    Environment = var.environment
+    Name        = "web-production"
   }
 
 }
