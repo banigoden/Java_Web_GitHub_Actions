@@ -66,9 +66,8 @@ jobs:
 
       - name: Initialize Terraform
         id: init
-        run: |
-          cd deployment/terraform/ \
-          && make init
+        run: make init
+        working-directory: deployment/terraform
 
       - name: Terraform Plan
         id: plan
