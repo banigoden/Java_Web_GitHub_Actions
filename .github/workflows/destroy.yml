@@ -1,0 +1,44 @@
+---
+name: Terraform Destroy
+
+on: workflow_dispatch # yamllint disable-line rule:truthy
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: 'eu-central-1'
+  IMAGE_NAME: 'web_app-ghcr'
+  IMAGE_VERSION: 'latest'
+  BRANCH_NAME: ${{ github.ref_name }}
+
+jobs:
+  terraform-destroy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Install make and tfmask
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make wget
+          sudo wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
+          sudo chmod 755 /usr/bin/tfmask
+
+      - name: Checkout code
+        uses: actions/checkout@v3.3.0
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Terraform Init
+        id: init
+        run: make init
+
+      - name: Terraform Destroy
+        run: make destroy
+        working-directory: deployment/terraform
