@@ -102,5 +102,5 @@ jobs:
       - name: Run Ansible Playbook
         env:
           ANSIBLE_HOST_KEY_CHECKING: 'false'
-        run: ansible-playbook deploy.yml -i inventory
+        run: ansible-playbook deployment/ansible/playbook.yml -i deployment/ansible/inventory/inventory
         working-directory: deployment/ansible
