@@ -70,14 +70,19 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+      - name: Initialize Terraform
+        id: init
+        run: make init
+        working-directory: deployment/terraform
+
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
         continue-on-error: true
 
-      - name: Initialize Terraform
-        id: init
-        run: make init
+      - name: Terraform validate
+        id: validate
+        run: make validate
         working-directory: deployment/terraform
 
       - name: Terraform Plan
