@@ -101,5 +101,5 @@ jobs:
 
       - name: Run Ansible Playbook
         # yamllint disable-line rule:line-length
-        run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --private-key EC2-django.pem -i inventory/ansible-inventory --user ec2-user
+        run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --private-key EC2-web_app.pem -i inventory/ansible-inventory --user ec2-user
         working-directory: deployment/ansible
