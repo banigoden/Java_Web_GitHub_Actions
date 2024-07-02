@@ -99,13 +99,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install ansible
 
-      # - name: Add SSH key
-      #   uses: webfactory/ssh-agent@v0.5.3
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Run Ansible Playbook
-        env:
-          ANSIBLE_HOST_KEY_CHECKING: 'false'
-        run: ansible-playbook playbook.yml -i inventory/ansible-inventory
+        # yamllint disable-line rule:line-length
+        run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --private-key EC2-django.pem -i inventory/ansible-inventory --user ec2-user
         working-directory: deployment/ansible
