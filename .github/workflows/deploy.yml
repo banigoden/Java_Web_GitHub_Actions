@@ -18,7 +18,7 @@ env:
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   AWS_REGION: 'eu-central-1'
   IMAGE_NAME: 'web_app-ghcr'
-  TF_VAR_IMAGE_VERSION: ${{ GITHUB_RUN_NUMBER }}
+  TF_VAR_IMAGE_VERSION: ${{github.run_number}}
   TF_VAR_ENVIRONMENT: ${{ inputs.job_environment }}
   BRANCH_NAME: ${{ github.ref_name }}
 
@@ -56,8 +56,8 @@ jobs:
       - name: Push Docker Image to Registry
         run: |
           cd deployment/docker \
-          && docker build . -t ghcr.io/banigoden/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
-          docker push ghcr.io/banigoden/${{ env.IMAGE_NAME }}:${{ env.IMAGE_VERSION }}
+          && docker build . -t ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v$GITHUB_RUN_NUMBER
+          docker push ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v$GITHUB_RUN_NUMBER
 
       - name: Install make and tfmask
         run: |

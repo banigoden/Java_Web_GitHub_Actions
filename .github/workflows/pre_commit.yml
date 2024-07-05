@@ -14,7 +14,7 @@ on:
 jobs:
   pre-commit:
     runs-on:
-      - linux
+      - ubuntu-latest
     container:
       image: ghcr.io/banigoden/web_app-ghcr:latest
       credentials:
