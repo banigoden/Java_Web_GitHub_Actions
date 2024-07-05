@@ -29,7 +29,12 @@ jobs:
           pip install poetry
 
       - name: Install env
-        run: poetry install --no-root
+        run: |
+          poetry install --no-root
+          wget https://github.com/terraform-linters/tflint/releases/download/v0.51.2/tflint_linux_amd64.zip
+          unzip tflint_linux_amd64.zip
+          cp tflint /usr/local/bin
+          chmod 777 /usr/local/bin/tflint
 
       - name: Run linter
         run: poetry run pre-commit run --all-files
