@@ -4,4 +4,6 @@ myvm ansible_host=${instance_public_ip}
 [all:vars]
 ansible_user=ec2-user
 region=${region}
+ENVIRONMENT=${ENVIRONMENT}
+IMAGE_VERSION=${IMAGE_VERSION}
 token=${GIT_TOKEN_MY}
