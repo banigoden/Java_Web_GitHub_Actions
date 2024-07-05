@@ -15,14 +15,6 @@ jobs:
   pre-commit:
     runs-on:
       - ubuntu-latest
-    container:
-      image: ghcr.io/banigoden/web_app-ghcr:latest
-      credentials:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-      env:
-        registry-username: ${{ secrets.DOCKER_USERNAME }}
-        registry-password: ${{ secrets.DOCKER_PASSWORD }}
     steps:
       - name: Checkout current repo
         uses: actions/checkout@v2
