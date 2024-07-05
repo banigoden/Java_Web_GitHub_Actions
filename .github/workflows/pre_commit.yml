@@ -24,8 +24,12 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Run linter
+      - name: Install poetry
         run: |
           pip install poetry
-          poetry run pre-commit install
-          poetry run pre-commit --all-files
+
+      - name: Install env
+        run: poetry install --no-root
+
+      - name: Run linter
+        run: poetry run pre-commit --all-files
