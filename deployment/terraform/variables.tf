@@ -1,4 +1,4 @@
-variable "aws_region" {
+variable "region" {
   type        = string
   description = "Default AWS Region"
   default     = "eu-central-1"
@@ -39,7 +39,7 @@ variable "vm_size" {
   default = "t2.micro"
 }
 
-variable "environment" {
+variable "ENVIRONMENT" {
   type        = string
   description = "Deployment environment (e.g., dev, prod)"
   default     = "dev"
@@ -49,4 +49,9 @@ variable "GIT_TOKEN" {
   type        = string
   default     = "xxxxxxxxxxxxxxxxxxx"
   description = "description"
+}
+
+variable "IMAGE_VERSION" {
+  type    = string
+  default = "001"
 }

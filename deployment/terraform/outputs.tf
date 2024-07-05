@@ -7,5 +7,5 @@ output "public_dns" {
 }
 
 output "region" {
-  value = var.aws_region
+  value = var.region
 }

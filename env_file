@@ -1,20 +1,20 @@
 #!/bin/bash
-//asked prod or dev
-read -e -p "Enter environment (prod/dev): " -i "dev" -r ENVIRONMENT_INP
+echo " Enter environment : {prod/dev}"
+read -r ENVIRONMENT_INP
 case $ENVIRONMENT_INP in
   prod | dev) echo "Selected environment: $ENVIRONMENT_INP" ;;
   *) echo -e "Unknown region: $ENVIRONMENT_INP\nAborting..."; return 1 ;;
 esac
 export ENVIRONMENT=$ENVIRONMENT_INP
 
-echo "Choose VM size:
-1) t2.micro
-2) t2.small
-3) t2.medium
-4) t3.micro
-5) t3.small
-6) t3.medium
-"
+# echo "Choose VM size:
+# 1) t2.micro
+# 2) t2.small
+# 3) t2.medium
+# 4) t3.micro
+# 5) t3.small
+# 6) t3.medium
+# "
 # read -p 'Choose VM size (1-6): ' vm_size_choice
 # case $vm_size_choice in
 # 1) echo "::set-output name=vm_size::t2.micro" ;;
@@ -30,17 +30,19 @@ echo "Choose VM size:
 echo "Choose region:
 1) us-east-1
 2) us-west-2
-3) eu-west-1
+3) eu-central-1
 "
-read -p 'Choose region (1-3): ' region_choice
+echo "Choose region (1-3):"
+read -r  region_choice
 case $region_choice in
 1) echo "::set-output name=region::us-east-1" ;;
 2) echo "::set-output name=region::us-west-2" ;;
-3) echo "::set-output name=region::eu-west-1" ;;
+3) echo "::set-output name=region::eu-centeral-1" ;;
 *) echo "Invalid choice"; exit 1 ;;
 esac
 export REGION
 
-read -s -r  "?Input git token here: " git_token
+echo "Input git token here: "
+read -s -r git_token
 export TF_VAR_GIT_TOKEN=$git_token
 export TF_VAR_REGION=$region
