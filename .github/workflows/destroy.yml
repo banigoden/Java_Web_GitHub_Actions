@@ -1,17 +1,7 @@
 ---
 name: Terraform Destroy
 
-on: # yamllint disable-line rule:truthy
-  workflow_dispatch:
-    inputs:
-      job_environment:
-        type: choice
-        description: 'Job environment prod or dev'
-        required: true
-        default: 'dev'
-        options:
-          - dev
-          - prod
+on: workflow_dispatch # yamllint disable-line rule:truthy
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -26,7 +16,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
 
     steps:
       - name: Install make and tfmask
@@ -39,19 +28,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3.3.0
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ${{ env.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-region: ${{ env.AWS_REGION }}
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Terraform Init
+        id: init
+        run: make init
 
       - name: Terraform Destroy
         id: destroy
         run: make destroy
         working-directory: deployment/terraform
-
-      - name: Clean up Terraform files
-        run: |
-          cd deployment/terraform
-          make clean
