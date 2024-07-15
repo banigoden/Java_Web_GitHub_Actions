@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: write
 
     steps:
       - name: Install make and tfmask
@@ -46,5 +47,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Terraform Destroy
+        id: destroy
         run: make destroy
         working-directory: deployment/terraform
+
+      - name: Clean up Terraform files
+        run: |
+          cd deployment/terraform
+          make clean
