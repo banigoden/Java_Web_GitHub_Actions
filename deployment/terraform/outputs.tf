@@ -6,6 +6,6 @@ output "public_dns" {
   value = aws_instance.web_app.public_dns
 }
 
-output "region" {
+output "AWS_REGION" {
   value = var.AWS_REGION
 }
