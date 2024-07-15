@@ -38,6 +38,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: make init
+        working-directory: deployment/terraform
 
       - name: Terraform Destroy
         id: destroy
