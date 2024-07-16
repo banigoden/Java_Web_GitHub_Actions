@@ -35,7 +35,7 @@ jobs:
         working-directory: deployment/terraform
 
       - name: Show Destroy plan
-        run: terraform plan -destroy
+        run: terraform plan -destroy -var-file=environments/eu-central-1-dev.tfvars
         continue-on-error: true
 
       - name: Terraform Destroy
