@@ -17,7 +17,7 @@ apply:
 	terraform apply -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 destroy:
-	terraform destroy -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
+	terraform plan -destroy -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 clean:
 	rm -rf ./deployment/terraform/.terraform
