@@ -6,6 +6,7 @@ output "public_dns" {
   value = aws_instance.web_app.public_dns
 }
 
-# output "aws_region" {
-#   value = var.aws_region
-# }
+output "region" {
+  value       = var.aws_region
+  description = "AWS region for the application to deploy into, e.g. 'us-east-1'."
+}
