@@ -1,8 +1,17 @@
 ---
 name: Terraform Destroy
 
-on: workflow_dispatch # yamllint disable-line rule:truthy
-
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+    inputs:
+      job_environment:
+        type: choice
+        description: 'Job environment prod or dev'
+        required: true
+        default: 'dev'
+        options:
+          - dev
+          - prod
 jobs:
   terraform-destroy:
     runs-on: ubuntu-latest
@@ -12,6 +21,7 @@ jobs:
       AWS_REGION: 'eu-central-1'
     permissions:
       contents: read
+      packages: write
 
     steps:
       - name: Install make and tfmask
@@ -20,6 +30,7 @@ jobs:
           sudo apt-get install -y make wget
           sudo wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
           sudo chmod 755 /usr/bin/tfmask
+          sudo apt-get install -y awscli
 
       - name: Checkout code
         uses: actions/checkout@v3.6.0
@@ -35,7 +46,8 @@ jobs:
         working-directory: deployment/terraform
 
       - name: Show Destroy plan
-        run: terraform plan -destroy -var-file=environments/eu-central-1-dev.tfvars
+        id: plan
+        run: make plan
         continue-on-error: true
 
       - name: Terraform Destroy
