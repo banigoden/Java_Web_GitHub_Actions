@@ -34,7 +34,7 @@ variable "vm_size" {
   default     = "t2.micro"
 }
 
-variable "AWS_REGION" {
+variable "aws_region" {
   description = "Default AWS Region"
   type        = string
   default     = "eu-central-1"
