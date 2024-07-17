@@ -49,6 +49,7 @@ jobs:
         id: plan
         run: make plan
         continue-on-error: true
+        working-directory: deployment/terraform
 
       - name: Terraform Destroy
         id: destroy
