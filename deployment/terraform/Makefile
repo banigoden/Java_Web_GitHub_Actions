@@ -8,7 +8,7 @@ init:
 	terraform init
 
 plan:
-	terraform plan -out=terraform.tfplan -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
+	terraform plan -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 validate:
 	terraform validate
