@@ -35,7 +35,7 @@ variable "vm_size" {
 }
 
 variable "aws_region" {
-  description = "Default AWS Region"
+  description = "AWS Region"
   type        = string
   default     = "eu-central-1"
 }
