@@ -1,3 +1,8 @@
+# Get the list of availability zones in the specified region
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 # Declare the VPC resource
 resource "aws_vpc" "my_vpc" {
   cidr_block = var.vpc_cidr_block
@@ -11,7 +16,7 @@ resource "aws_vpc" "my_vpc" {
 resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.my_vpc.id
   cidr_block              = var.subnet_cidr_block
-  availability_zone       = "eu-central-1a"
+  availability_zone       = data.aws_availability_zones.available.names[0]
   map_public_ip_on_launch = true
 }
 
@@ -47,7 +52,7 @@ resource "aws_route_table_association" "public_association" {
 resource "aws_subnet" "private_subnet" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = var.private_subnet_cidr_block
-  availability_zone = "eu-central-1b"
+  availability_zone = data.aws_availability_zones.available.names[1]
 }
 
 # Create a private route table

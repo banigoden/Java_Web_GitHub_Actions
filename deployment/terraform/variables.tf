@@ -1,9 +1,3 @@
-variable "region" {
-  type        = string
-  description = "Default AWS Region"
-  default     = "eu-central-1"
-}
-
 variable "vpc_cidr_block" {
   description = "CIDR block for the VPC"
   type        = string
@@ -22,7 +16,6 @@ variable "private_subnet_cidr_block" {
   default     = "192.168.2.0/24"
 }
 
-
 variable "ami_number" {
   description = "AMI number"
   type        = string
@@ -30,28 +23,38 @@ variable "ami_number" {
 }
 
 variable "instance_name" {
-  type    = string
-  default = "web_app"
+  description = "Name of the EC2 instance"
+  type        = string
+  default     = "web_app"
 }
 
 variable "vm_size" {
-  type    = string
-  default = "t2.micro"
+  description = "Size of the EC2 instance"
+  type        = string
+  default     = "t2.micro"
+}
+
+variable "aws_region" {
+  description = "AWS Region"
+  type        = string
+  default     = "eu-central-1"
 }
 
 variable "ENVIRONMENT" {
-  type        = string
   description = "Deployment environment (e.g., dev, prod)"
+  type        = string
   default     = "dev"
 }
 
 variable "GIT_TOKEN" {
+  description = "Git token for accessing private repositories"
   type        = string
   default     = "xxxxxxxxxxxxxxxxxxx"
-  description = "description"
+  sensitive   = true
 }
 
 variable "IMAGE_VERSION" {
-  type    = string
-  default = "001"
+  description = "Version of the Docker image"
+  type        = string
+  default     = "001"
 }

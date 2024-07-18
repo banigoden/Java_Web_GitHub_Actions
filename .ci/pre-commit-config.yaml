@@ -21,6 +21,12 @@ repos:
       - id: check-case-conflict
       - id: check-ast
 
+  # CICD ####################################################################
+  - repo: https://github.com/sirosen/check-jsonschema
+    rev: 0.26.1
+    hooks:
+      - id: check-github-workflows
+
   # ANSIBLE  ################################################################
   - repo: https://github.com/ansible/ansible-lint
     rev: v24.2.1
@@ -40,8 +46,8 @@ repos:
     rev: v1.92.0
     hooks:
       - id: terraform_fmt
-      # - id: terraform_validate
       - id: terraform_tflint
+      - id: terraform_validate
 
    # Docker hooks
   - repo: https://github.com/IamTheFij/docker-pre-commit

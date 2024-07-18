@@ -8,7 +8,7 @@ init:
 	terraform init
 
 plan:
-	terraform plan -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
+	terraform plan -destroy -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 validate:
 	terraform validate
@@ -20,6 +20,5 @@ destroy:
 	terraform destroy -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 clean:
-	rm -rf ./deployment/terraform/.terraform
-	rm -rf ./deployment/terraform/*.hcl
-	rm -rf ./deployment/terraform/*.tfstate
+	rm -rf ./deployment/terraform/ \
+	; rm -rf ./deployment/terraform.lock.hcl terraform*.tfstate terraform*.out terraform*.plan terraform*.log
