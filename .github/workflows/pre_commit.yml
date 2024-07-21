@@ -13,8 +13,8 @@ on:
 
 jobs:
   pre-commit:
-    runs-on:
-      - ubuntu-latest
+    runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout current repo
         uses: actions/checkout@v3.6.0
