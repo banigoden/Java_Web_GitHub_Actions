@@ -44,7 +44,7 @@ repos:
     hooks:
       - id: terraform_fmt
       - id: terraform_tflint
-      #- id: terraform_validate
+    # - id: terraform_validate
 
    # Docker hooks
   - repo: https://github.com/IamTheFij/docker-pre-commit
