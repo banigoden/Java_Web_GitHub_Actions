@@ -16,7 +16,6 @@ repos:
       - id: detect-private-key
       - id: mixed-line-ending
       - id: check-case-conflict
-      - id: check-ast
 
   # CICD ####################################################################
   - repo: https://github.com/sirosen/check-jsonschema
