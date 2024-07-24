@@ -1,0 +1,24 @@
+# ---
+# # tasks file for check_docker_compose
+# # - name: Ensure Docker Compose is installed
+# #   community.docker.docker_compose:
+# #     project_src: /home/ec2-user/docker-compose.yml
+# #     state: present
+
+# - name: Ensure Docker service is started
+#   ansible.builtin.systemd:
+#     name: docker
+#     state: started
+#     enabled: true
+
+# - name: Check if Docker Compose stack is running
+#   community.docker.docker_compose:
+#     project_src: /home/ec2-user/docker-compose.yml
+#     state: present
+#   register: docker_compose_status
+
+# - name: Start Docker Compose stack if not running
+#   community.docker.docker_compose:
+#     project_src: /home/ec2-user/docker-compose.yml
+#     state: present
+#   when: not docker_compose_status.changed
