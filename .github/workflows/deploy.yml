@@ -59,6 +59,14 @@ jobs:
           && docker build . -t ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v$GITHUB_RUN_NUMBER
           docker push ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v$GITHUB_RUN_NUMBER
 
+      - name: Scan the Docker image with Grype
+        uses: anchore/scan-action@v3
+        with:
+          image: ${{ env.IMAGE_NAME }}:v${{ env.IMAGE_VERSION }}
+          fail-build: false
+          output-format: table
+          only-fixed: true
+
       - name: Install make, tfmask, ansible and AWS CLI
         run: |
           sudo apt-get update
@@ -107,14 +115,6 @@ jobs:
       - name: Apply Terraform
         run: terraform apply -auto-approve
         working-directory: deployment/terraform
-
-      - name: Scan the Docker image with Grype
-        uses: anchore/scan-action@v3
-        with:
-          image: ${{ env.IMAGE_NAME }}:v${{ env.IMAGE_VERSION }}
-          fail-build: false
-          output-format: table
-          only-fixed: true
 
       - name: Run Ansible Playbook
         # yamllint disable-line rule:line-length
