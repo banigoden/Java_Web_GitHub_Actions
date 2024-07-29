@@ -20,17 +20,16 @@ install_docker_pip_modules:
   - lvm2
   - docker
   - docker-compose
+  - containerd.io
+  - docker-compose-plugin
   - pymysql
 
 install_docker_redhat_packages:
-  - python3-pip
-  - python3-devel
-  - python3-setuptools
-  - docker
-  - git
-  - jq
-  - vim
-  - libicu
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
 
 install_docker_pip_modules_red:
   - passlib

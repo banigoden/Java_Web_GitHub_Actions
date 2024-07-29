@@ -16,13 +16,6 @@ repos:
       - id: mixed-line-ending
       - id: check-case-conflict
 
-# # Add grype hook for Docker image vulnerability scanning
-#   - repo: https://github.com/anchore/grype
-#     rev: v0.79.3
-#     hooks:
-#       - id: grype
-#         args: [--exit-code 0]
-
   # CICD ####################################################################
   - repo: https://github.com/sirosen/check-jsonschema
     rev: 0.29.0

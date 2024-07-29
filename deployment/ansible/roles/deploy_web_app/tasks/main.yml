@@ -19,16 +19,16 @@
     group: ec2-user
     mode: '0644'
 
-# - name: Build Docker image
-#   community.docker.docker_image:
-#     path: /home/ec2-user/docker-compose.yml
-#     name: web_app
-
 # - name: Run Docker container
 #   community.docker.docker_container:
 #     name: web_app
-#     image: web_app
+#     image: web_app:latest
 #     state: started
 #     restart_policy: always
 #     ports:
 #       - "80:80"
+
+# - name: Run Docker Compose up
+#   ansible.builtin.shell: docker compose up -d
+#   args:
+#     chdir: /home/ec2-user
