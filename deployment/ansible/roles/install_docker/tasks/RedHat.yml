@@ -4,16 +4,10 @@
     name: yum-utils
     state: present
 
-# - name: Add Docker CE repository
-#   ansible.builtin.command: yum-config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
 - name: Add Docker CE repository
-  ansible.builtin.yum_repository:
-    name: docker-ce
-    description: Docker CE Repository
-    baseurl: https://download.docker.com/linux/rhel/docker-ce.repo
-    gpgcheck: true
-    gpgkey: https://download.docker.com/linux/centos/gpg
-    enabled: true
+  ansible.builtin.command: yum-config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
+  register: my_output
+  changed_when: my_output.rc != 0
 
 - name: Install Docker packages
   ansible.builtin.dnf:
