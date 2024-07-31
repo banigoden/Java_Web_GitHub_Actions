@@ -60,7 +60,7 @@ jobs:
           docker push ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v$GITHUB_RUN_NUMBER
 
       - name: Scan the Docker image with Grype
-        uses: anchore/scan-action@v3
+        uses: anchore/scan-action@v3.3.6
         with:
           image: ${{ env.IMAGE_NAME }}:v${{ env.IMAGE_VERSION }}
           fail-build: false
@@ -107,11 +107,6 @@ jobs:
         run: make workspace
         working-directory: deployment/terraform
 
-      - name: Terraform Plan
-        id: plan
-        run: make plan
-        working-directory: deployment/terraform
-
       - name: Apply Terraform
         run: terraform apply -auto-approve
         working-directory: deployment/terraform
@@ -119,4 +114,8 @@ jobs:
       - name: Run Ansible Playbook
         # yamllint disable-line rule:line-length
         run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --private-key EC2-web_app.pem -i inventory/ansible-inventory --user ec2-user
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
         working-directory: deployment/ansible

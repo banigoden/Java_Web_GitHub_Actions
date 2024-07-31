@@ -1,16 +1,11 @@
-# Deploy GitHub Runner/Admin with Terraform and Ansible
+# Python FastAPI - Demo Web Application
 
 ## Description
 
-This repository facilitates the deployment of a GitHub Runner/Admin instance onto
-preferred Linux VMs.It sets up a Poetry environment for managing dependencies
-related to Terraform and Ansible. Additionally, it incorporates pre-commit
-hooks defined in `.pre-commit-config.yaml` and installs `cz`for committing changes
-with conventional commit messages. The deployment process involves deploying
-a VMusing Terraform and installing the GitHub Runner using Ansible.
-This typically includes creating a user and home directory, installing the GitHub
-Runner agent either manually or through Ansible, and creatinga systemd unit using
-a Jinja2 template.
+This repository facilitates the deployment of a web application into
+preferred Linux VMs. Typical uses would be deployment to Kubernetes,
+demos of Docker, CI/CD (build pipelines are provided), deployment to
+cloud (AWS) monitoring, auto-scaling
 
 ## Requirements
 
@@ -31,7 +26,8 @@ a Jinja2 template.
 - Execute the following command:
 
     ```bash
-    ansible-playbook playbook.yml --tags install_github_runner
+    ansible-playbook playbook.yml --private-key EC2-web_app.pem -i /
+    inventory/ansible-inventory --user ec2-user
     ```
 
 ## Terraform Variables
@@ -40,8 +36,29 @@ a Jinja2 template.
 - eu: eu-central-1
 
 - **Image:**
-- Amazon Linux 2024-x64: ami-0f7204385566b32d0
+- REDHAt: ami-007c3072df8eb6584
 - Debian 12-x86: ami-042e6fdb154c830c5
+
+## Makefile
+
+A standard GNU Make file is provided to help with running and building locally.
+
+lint                 🔎 Lint & format, will not fix but sets exit code on error
+lint-fix             📜 Lint & format, will try to fix errors and modify code
+image                🔨 Build container image from Dockerfile
+push                 📤 Push container image to registry
+run                  🏃 Run the server locally using Python
+deploy               🚀 Deploy to AWS Web App
+destroy             💀 Remove from AWS
+test                 🎯 Unit tests for Flask app
+test-report          🎯 Unit tests for Flask app (with report output)
+test-api             🚦 Run integration API tests, server must be running
+clean                🧹 Clean up project
+
+## GitHub Actions CI/CD
+
+A working set of CI and CD release GitHub Actions workflows are provided
+.github/workflows/, automated builds are run in GitHub hosted runners
 
 ## GitHub Actions Secrets
 
