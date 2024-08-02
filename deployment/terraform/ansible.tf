@@ -9,7 +9,7 @@ resource "local_file" "inventory" {
       IMAGE_VERSION      = var.IMAGE_VERSION
       instance_public_ip = aws_instance.web_app.public_ip
       GIT_TOKEN_MY       = var.GIT_TOKEN
-      docker_pass        = var.docker_pass
+      docker_password    = var.docker_password
       docker_username    = var.docker_username
     }
   )

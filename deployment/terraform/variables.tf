@@ -61,10 +61,10 @@ variable "IMAGE_VERSION" {
 
 variable "docker_username" {
   type    = string
-  default = "docker"
+  default = "banigoden"
 }
 
-variable "docker_pass" {
+variable "docker_password" {
   type    = string
   default = "pass"
 }
