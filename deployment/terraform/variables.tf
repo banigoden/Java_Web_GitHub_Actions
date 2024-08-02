@@ -58,3 +58,13 @@ variable "IMAGE_VERSION" {
   type        = string
   default     = "001"
 }
+
+variable "docker_username" {
+  type    = string
+  default = "docker"
+}
+
+variable "docker_pass" {
+  type    = string
+  default = "pass"
+}

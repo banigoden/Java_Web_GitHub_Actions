@@ -5,11 +5,24 @@
     state: started
     enabled: true
 
-- name: Check if Docker Compose stack is running
-  community.docker.docker_compose_v2:
-    project_src: /home/ec2-user/
-    state: present
-  register: docker_compose_status
+- name: Log into Github  # noqa: args[module]
+  become: true
+  community.docker.docker_login:
+    registry: ghcr.io
+    username: "{{ docker_username }}"
+    password: "{{ docker_pass }}"
+    reauthorize: true
+  tags: ["docker", "redeploy", "always"]
+
+- name: Check Docker Compose stack
+  ansible.builtin.shell:
+    cmd: "docker compose ps --filter status=running --services"
+    chdir: "{{ install_path }}"
+  args:
+    executable: /bin/bash
+  register: stack_state
+  changed_when: stack_state.rc !=2
+  tags: ["always"]
 
 - name: Start Docker Compose stack if not running
   community.docker.docker_compose_v2:
