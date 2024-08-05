@@ -1,2 +1,2 @@
 ---
-# defaults file for deploy_web_app
+deploy_web_app_install_path: /opt/webapp

@@ -5,37 +5,24 @@
     state: started
     enabled: true
 
-- name: Ensure Docker service is started
-  ansible.builtin.systemd:
-    name: docker
-    state: started
-    enabled: true
+- name: Add user to Docker group
+  ansible.builtin.user:
+    name: ec2-user
+    groups: docker
+    append: true
 
-- name: Copy Dockerfile to EC2 instance
-  ansible.builtin.template:
-    src: docker-compose.yml.j2
-    dest: /home/ec2-user/docker-compose.yml
+- name: Create folder
+  ansible.builtin.file:
+    path: "{{ deploy_web_app_install_path }}"
+    state: directory
     owner: root
     group: root
     mode: '0644'
 
-# - name: Run Docker container
-#   community.docker.docker_container:
-#     name: web_app
-#     image: web_app:latest
-#     state: started
-#     restart_policy: always
-#     ports:
-#       - "80:80"
-
-# - name: Login to Docker Registry
-#   ansible.builtin.command: >
-#     docker login -u "{{ docker_username }}" -p "{{ docker_password }}" {{ docker_registry }}
-#   register: docker_login
-#   no_log: true
-
-# - name: Run Docker Compose up
-#   ansible.builtin.shell: docker compose up -d
-#   args:
-#     chdir: /home/ec2-user
-#   when: docker_login is succeeded
+- name: Copy Dockerfile to EC2 instance
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ deploy_web_app_install_path }}/docker-compose.yml"
+    owner: root
+    group: root
+    mode: '0644'

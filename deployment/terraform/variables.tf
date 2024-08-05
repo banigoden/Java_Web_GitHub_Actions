@@ -46,17 +46,10 @@ variable "ENVIRONMENT" {
   default     = "dev"
 }
 
-variable "GIT_TOKEN" {
-  description = "Git token for accessing private repositories"
-  type        = string
-  default     = "xxxxxxxxxxxxxxxxxxx"
-  sensitive   = true
-}
-
 variable "IMAGE_VERSION" {
   description = "Version of the Docker image"
   type        = string
-  default     = "001"
+  default     = "43"
 }
 
 variable "docker_username" {
@@ -64,7 +57,7 @@ variable "docker_username" {
   default = "banigoden"
 }
 
-variable "docker_password" {
+variable "image_name" {
   type    = string
-  default = "pass"
+  default = "ghcr.io/banigoden/web_app-ghcr"
 }
