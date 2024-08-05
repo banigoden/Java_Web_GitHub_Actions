@@ -1,2 +1,2 @@
 ---
-# check_docker_compose_install_path: /opt/webapp
+check_docker_compose_install_path: /opt/webapp
