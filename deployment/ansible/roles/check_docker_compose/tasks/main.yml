@@ -4,15 +4,15 @@
     name: docker
     state: started
     enabled: true
-#
-# - name: Log into Github  # noqa: args[module]
-#   become: true
-#   community.docker.docker_login:
-#     registry: ghcr.io
-#     username: "{{ docker_username }}"
-#     password: "{{ lookup('env', 'ANSIBLE_VAR_TOKEN') }}"
-#     reauthorize: true
-#   tags: ["docker", "redeploy"]
+
+- name: Log into Github  # noqa: args[module]
+  become: true
+  community.docker.docker_login:
+    registry: ghcr.io
+    username: "{{ docker_username }}"
+    password: "{{ lookup('env', 'ANSIBLE_VAR_TOKEN') }}"
+    reauthorize: true
+  tags: ["docker", "redeploy"]
 #
 # - name: Check Docker Compose stack
 #   ansible.builtin.shell:
