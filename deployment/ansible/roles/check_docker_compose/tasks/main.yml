@@ -13,16 +13,16 @@
     password: "{{ lookup('env', 'ANSIBLE_VAR_TOKEN') }}"
     reauthorize: true
   tags: ["docker", "redeploy"]
-#
-# - name: Check Docker Compose stack
-#   ansible.builtin.shell:
-#     cmd: "docker compose ps --filter status=running --services"
-#     chdir: "{{ check_docker_compose_install_path }}"
-#   args:
-#     executable: /bin/bash
-#   register: stack_state
-#   changed_when: stack_state.rc !=2
-#   tags: ["redeploy"]
+
+- name: Check Docker Compose stack
+  ansible.builtin.shell:
+    cmd: "docker compose ps --filter status=running --services"
+    chdir: "{{ check_docker_compose_install_path }}"
+  args:
+    executable: /bin/bash
+  register: stack_state
+  changed_when: stack_state.rc !=2
+  tags: ["redeploy"]
 #
 # - name: Deploy Docker Compose stack  # noqa: args[module]
 #   community.docker.docker_compose_v2:
