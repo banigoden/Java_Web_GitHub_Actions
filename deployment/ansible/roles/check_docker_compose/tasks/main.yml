@@ -23,9 +23,9 @@
   register: stack_state
   changed_when: stack_state.rc !=2
   tags: ["redeploy"]
-#
-# - name: Deploy Docker Compose stack  # noqa: args[module]
-#   community.docker.docker_compose_v2:
-#     project_src: "{{ check_docker_compose_install_path }}"
-#   register: output
-#   tags: ["docker", "redeploy"]
+
+- name: Deploy Docker Compose stack  # noqa: args[module]
+  community.docker.docker_compose_v2:
+    project_src: "{{ check_docker_compose_install_path }}"
+  register: output
+  tags: ["docker", "redeploy"]
