@@ -1,23 +1,23 @@
 ---
-- name: Add Docker CE repository
+- name: Add repository
   ansible.builtin.yum_repository:
     name: docker_ce
-    description: Docker CE Repository for Amazon Linux 2
-    baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
-    gpgcheck: true
-    gpgkey: https://download.docker.com/linux/centos/gpg
+    description: docker_ce
+    baseurl: https://download.docker.com/linux/centos/$releasever/$basearch/stable
     enabled: true
+    gpgcheck: true
 
 - name: Update cache
-  ansible.builtin.yum:
+  ansible.builtin.dnf:
     update_cache: true
 
-- name: Install Docker and other packages
-  ansible.builtin.yum:
+- name: Install Docker
+  ansible.builtin.dnf:
     name: "{{ install_docker_redhat_packages }}"
     state: present
     disable_gpg_check: true
 
+# yamllint disable
 - name: Docker create config directory
   ansible.builtin.file:
     dest: "{{ item.dest }}"
@@ -26,20 +26,30 @@
     group: "{{ item.group }}"
     state: directory
   loop:
-    - { dest: '/root/.docker/', mode: '0644', owner: 'root', group: 'root' }
-    - { dest: '/var/lib/home/scp/.docker/', mode: '0744', owner: 'root', group: 'root' }
+    - {dest: '/root/.docker/', mode: '0644', owner: 'root', group: 'root' }
+    - {dest: '/var/lib/home/scp/.docker/', mode: '0744', owner: 'root', group: 'root' }
+
+- name: Docker config proxy
+  ansible.builtin.template:
+    src: config.json.j2
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+  loop:
+    - {dest: '/root/.docker/config.json', mode: '0644', owner: 'root', group: 'root' }
+    - {dest: '/var/lib/home/scp/.docker/config.json', mode: '0644', owner: 'root', group: 'root' }
+# yamllint enable
 
 - name: Install Docker Compose
   ansible.builtin.get_url:
-    url: >
-      https://github.com/docker/compose/releases/download/v2.13.0/docker-compose-Linux-x86_64
+    url: https://github.com/docker/compose/releases/download/v2.13.0/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: '0754'
 
-- name: Install Python modules
+- name: Install Py modules
   ansible.builtin.pip:
     name: "{{ install_docker_pip_modules_red }}"
-    extra_args: --force-reinstall
 
 - name: Create Docker.d dir
   ansible.builtin.file:
@@ -48,3 +58,12 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Template Proxy config
+  ansible.builtin.template:
+    src: http-proxy.conf.j2
+    dest: /etc/systemd/system/docker.service.d/http-proxy.conf
+    mode: '0755'
+  notify:
+    - Daemon_reload
+    - Restart_docker

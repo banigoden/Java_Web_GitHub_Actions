@@ -8,3 +8,7 @@
       tags: ["docker"]
     - role: deploy_web_app
       tags: ["web_app"]
+    - role: check_docker_compose
+      tags: ["check_docker"]
+    - role: install_config_nginx
+      tags: ["config_nginx"]

@@ -3,10 +3,10 @@ version: '3.8'
 
 services:
   web:
-    image: ghcr.io/banigoden/web_app-ghcr:{{ IMAGE_VERSION }}
+    image: ghcr.io/banigoden/web_app-ghcr:v{{ IMAGE_VERSION }}
     container_name: web_app_{{ ENVIRONMENT }}
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       - db
     environment:

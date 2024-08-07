@@ -19,7 +19,7 @@ variable "private_subnet_cidr_block" {
 variable "ami_number" {
   description = "AMI number"
   type        = string
-  default     = "ami-0f7204385566b32d0"
+  default     = "ami-007c3072df8eb6584"
 }
 
 variable "instance_name" {
@@ -46,15 +46,18 @@ variable "ENVIRONMENT" {
   default     = "dev"
 }
 
-variable "GIT_TOKEN" {
-  description = "Git token for accessing private repositories"
-  type        = string
-  default     = "xxxxxxxxxxxxxxxxxxx"
-  sensitive   = true
-}
-
 variable "IMAGE_VERSION" {
   description = "Version of the Docker image"
   type        = string
-  default     = "001"
+  default     = "43"
+}
+
+variable "docker_username" {
+  type    = string
+  default = "banigoden"
+}
+
+variable "image_name" {
+  type    = string
+  default = "ghcr.io/banigoden/web_app-ghcr"
 }

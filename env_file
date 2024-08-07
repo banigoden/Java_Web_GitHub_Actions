@@ -44,5 +44,5 @@ export REGION
 
 echo "Input git token here: "
 read -s -r git_token
-export TF_VAR_GIT_TOKEN=$git_token
+export ANSIBLE_VAR_TOKEN=$git_token
 export TF_VAR_REGION=$region

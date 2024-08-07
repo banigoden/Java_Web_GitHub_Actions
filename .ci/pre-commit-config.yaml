@@ -3,8 +3,7 @@ default_language_version:
   ruby: 2.7.2
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: check-merge-conflict
       - id: trailing-whitespace
@@ -19,13 +18,13 @@ repos:
 
   # CICD ####################################################################
   - repo: https://github.com/sirosen/check-jsonschema
-    rev: 0.26.1
+    rev: 0.29.0
     hooks:
       - id: check-github-workflows
 
   # ANSIBLE  ################################################################
   - repo: https://github.com/ansible/ansible-lint
-    rev: v24.2.1
+    rev: v24.7.0
     hooks:
       - id: ansible-lint
         args: ['-c', '.ci/ansible-lint']
@@ -38,12 +37,12 @@ repos:
         args: ['-c=.ci/yamllint']
 
   # TERRAFORM ##############################################################
-  - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.92.0
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.23
     hooks:
-      - id: terraform_fmt
-      - id: terraform_tflint
-    # - id: terraform_validate
+      - id: terraform-fmt
+      - id: terraform-validate
+      - id: tflint
 
    # Docker hooks
   - repo: https://github.com/IamTheFij/docker-pre-commit
@@ -69,4 +68,4 @@ repos:
         stages:
           - push
     repo: https://github.com/commitizen-tools/commitizen
-    rev: v3.18.4
+    rev: v3.28.0

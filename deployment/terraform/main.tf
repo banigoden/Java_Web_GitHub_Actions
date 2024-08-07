@@ -27,5 +27,4 @@ resource "aws_instance" "web_app" {
     Environment = var.ENVIRONMENT
     Name        = "web-production"
   }
-
 }

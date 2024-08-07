@@ -8,7 +8,8 @@ resource "local_file" "inventory" {
       ENVIRONMENT        = var.ENVIRONMENT
       IMAGE_VERSION      = var.IMAGE_VERSION
       instance_public_ip = aws_instance.web_app.public_ip
-      GIT_TOKEN_MY       = var.GIT_TOKEN
+      docker_username    = var.docker_username
+      image_name         = var.image_name
     }
   )
   depends_on = [aws_instance.web_app]

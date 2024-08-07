@@ -13,11 +13,14 @@ plan:
 validate:
 	terraform validate
 
+workspace:
+	terraform workspace select '$(ENVIRONMENT)' || terraform workspace new '$(ENVIRONMENT)'
+
 apply:
-	terraform apply -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
+	terraform workspace select '$(ENVIRONMENT)' && terraform apply -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 destroy:
-	terraform destroy -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
+	terraform workspace select '$(ENVIRONMENT)' && terraform destroy -auto-approve -var-file=environments/$(REGION)-$(ENVIRONMENT).tfvars
 
 clean:
 	rm -rf ./deployment/terraform/ \

@@ -1,16 +1,17 @@
-# Deploy GitHub Runner/Admin with Terraform and Ansible
+# Automating CI/CD with GitHub Actions and Python FastAPI - Demo Web Application
 
-## Description
+## Workflow Overview
 
-This repository facilitates the deployment of a GitHub Runner/Admin instance onto
-preferred Linux VMs.It sets up a Poetry environment for managing dependencies
-related to Terraform and Ansible. Additionally, it incorporates pre-commit
-hooks defined in `.pre-commit-config.yaml` and installs `cz`for committing changes
-with conventional commit messages. The deployment process involves deploying
-a VMusing Terraform and installing the GitHub Runner using Ansible.
-This typically includes creating a user and home directory, installing the GitHub
-Runner agent either manually or through Ansible, and creatinga systemd unit using
-a Jinja2 template.
+The workflow orchestrates tasks, including setting up the development
+environment, running tests, building Docker images, and deploying the
+application locally. Notably, it incorporates Grype, an open-source tool,
+for Docker image vulnerability scanning, ensuring a secure and automated
+deployment pipeline.
+This repository facilitates the deployment of a web application into
+preferred Linux VMs. Typical uses would be deployment to Kubernetes,
+demos of Docker, CI/CD (build pipelines are provided), deployment to
+cloud (AWS) monitoring.
+It takes ~5-6 min to deploy Web App Server.
 
 ## Requirements
 
@@ -22,17 +23,24 @@ a Jinja2 template.
 - pylinter
 - Docker on host OS
 
-## How to
+## How to deploy flow
 
-- **Install GitHub Runner Agent**
-- **Manual Installation:**
-- Follow the manual instructions provided by GitHub.
-- **Ansible Installation:**
-- Execute the following command:
+Choose:
 
-    ```bash
-    ansible-playbook playbook.yml --tags install_github_runner
-    ```
+- branch
+- environment
+- region
+
+  ```bash
+  ansible-playbook playbook.yml --private-key EC2-web_app.pem -i /
+  inventory/ansible-inventory --user ec2-user
+  ```
+
+## Using terraform
+
+Clone repo
+Add your Digital Ocean token to terraform.tfvars.example, amd rename it to terraform.tfvars
+Init terraform providers
 
 ## Terraform Variables
 
@@ -40,12 +48,34 @@ a Jinja2 template.
 - eu: eu-central-1
 
 - **Image:**
-- Amazon Linux 2024-x64: ami-0f7204385566b32d0
+- REDHAt: ami-007c3072df8eb6584
 - Debian 12-x86: ami-042e6fdb154c830c5
+
+## Using make
+
+init                 🔎 Init terraform modules
+plan                 📜 Plan infrasrtucture
+apply                📤 Configured AWS
+deploy               🚀 Deploy infrastructure without any confirmations
+destroy              💀 Destroy infrastructure. Without any confirmations
+test                 🎯 Unit tests for FastAPI app
+clean                🧹 Clean up project
+
+## GitHub Actions CI/CD
+
+A working set of CI and CD release GitHub Actions workflows are provided
+.github/workflows/, automated builds are run in GitHub hosted runners
 
 ## GitHub Actions Secrets
 
-- `GITHUB_REPO_TOKEN`: GitHub repository token required for GitHub Runner.
+- TOKEN : GitHub repository token required for GitHub Runner.
+- AWS_ACCESS_KEY_ID :
+- AWS_SECRET_ACCESS_KEY:
+- AWS_REGION:
+- IMAGE_NAME:
+- TF_VAR_IMAGE_VERSION:
+- TF_VAR_ENVIRONMENT:
+- BRANCH_NAME:
 
 ## License
 
