@@ -4,6 +4,7 @@
     name: nginx
     state: present
     update_cache: true
+  tags: ["nginx"]
 
 - name: Create Nginx configuration file
   ansible.builtin.template:
@@ -14,9 +15,11 @@
     mode: '0644'
   register: nginx_conf
   notify: Restart_nginx
+  tags: ["nginx"]
 
 - name: Ensure Nginx is running and enabled
   ansible.builtin.service:
     name: nginx
     state: started
     enabled: true
+  tags: ["nginx"]

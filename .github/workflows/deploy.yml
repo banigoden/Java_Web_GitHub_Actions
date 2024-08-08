@@ -12,6 +12,42 @@ on: # yamllint disable-line rule:truthy
         options:
           - dev
           - prod
+      region:
+        type: choice
+        description: 'Chose Region'
+        required: true
+        default: 'eu-central-1'
+        options:
+          - us-east-1
+          - us-west-2
+          - eu-central-1
+      vm_size:
+        type: choice
+        description: 'Droplet/VM size'
+        required: true
+        default: 't2.micro'
+        options:
+          - t2.micro
+          - t2.small
+          - t2.medium
+          - t3.micro
+          - t3.small
+          - t3.medium
+      DB_NAME:
+        type: string
+        description: 'Input db name'
+        required: true
+        default: 'mydatabase'
+      DB_USER:
+        type: string
+        description: 'Input db username'
+        required: true
+        default: 'root'
+      DB_PASS:
+        type: string
+        description: 'Input db password'
+        required: true
+        default: 'mysecretpassword'
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -112,16 +148,7 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: deployment/terraform
 
-      # - name: Archive production artifacts
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: artifacts
-      #     path: |
-      #        deployment/ansible/EC2-web_app.pem
-
       - name: Run Ansible Playbook
         # yamllint disable-line rule:line-length
         run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --private-key EC2-web_app.pem -i inventory/ansible-inventory --user ec2-user
-        # with:
-        #   token: ${{ secrets.TOKEN_GITHUB }}
         working-directory: deployment/ansible

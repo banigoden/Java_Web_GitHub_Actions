@@ -28,3 +28,9 @@ resource "aws_instance" "web_app" {
     Name        = "web-production"
   }
 }
+
+resource "time_sleep" "wait_15_seconds" {
+  depends_on = [local_file.inventory]
+
+  create_duration = "15s"
+}

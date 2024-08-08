@@ -61,3 +61,18 @@ variable "image_name" {
   type    = string
   default = "ghcr.io/banigoden/web_app-ghcr"
 }
+
+variable "db_user" {
+  type    = string
+  default = "test1"
+}
+
+variable "db_pass" {
+  type    = string
+  default = "passdb"
+}
+
+variable "db_name" {
+  type    = string
+  default = "test_db"
+}

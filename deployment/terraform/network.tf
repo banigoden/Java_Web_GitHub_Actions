@@ -1,9 +1,7 @@
-# Get the list of availability zones in the specified region
 data "aws_availability_zones" "available" {
   state = "available"
 }
 
-# Declare the VPC resource
 resource "aws_vpc" "my_vpc" {
   cidr_block = var.vpc_cidr_block
 
@@ -12,7 +10,6 @@ resource "aws_vpc" "my_vpc" {
   }
 }
 
-#the public subnet
 resource "aws_subnet" "public_subnet" {
   vpc_id                  = aws_vpc.my_vpc.id
   cidr_block              = var.subnet_cidr_block
@@ -20,7 +17,6 @@ resource "aws_subnet" "public_subnet" {
   map_public_ip_on_launch = true
 }
 
-# Create an Internet Gateway for public subnet
 resource "aws_internet_gateway" "gw1" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -42,20 +38,17 @@ resource "aws_route_table" "public_route_table" {
   }
 }
 
-# Associate public route table with public subnet
 resource "aws_route_table_association" "public_association" {
   subnet_id      = aws_subnet.public_subnet.id
   route_table_id = aws_route_table.public_route_table.id
 }
 
-# The private subnet
 resource "aws_subnet" "private_subnet" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = var.private_subnet_cidr_block
   availability_zone = data.aws_availability_zones.available.names[1]
 }
 
-# Create a private route table
 resource "aws_route_table" "private_route_table" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -64,13 +57,11 @@ resource "aws_route_table" "private_route_table" {
   }
 }
 
-# Associate private route table with private subnet
 resource "aws_route_table_association" "private_association" {
   subnet_id      = aws_subnet.private_subnet.id
   route_table_id = aws_route_table.private_route_table.id
 }
 
-# Create an AWS security group allowing SSH access
 resource "aws_security_group" "allow_ssh" {
   name        = "allow_ssh"
   description = "Allow inbound SSH traffic"

@@ -23,11 +23,12 @@ It takes ~5-6 min to deploy Web App Server.
 - pylinter
 - Docker on host OS
 
-## How to deploy flow
+## Deploy flow
 
-Choose:
+choose:
 
 - branch
+- size of droplet
 - environment
 - region
 
@@ -46,6 +47,16 @@ Init terraform providers
 
 - **Region:**
 - eu: eu-central-1
+- us: us-east-1
+- us: us-west-2
+
+- **VM size:**
+- t2.micro
+- t2.small
+- t2.medium
+- t3.micro
+- t3.small
+- t3.medium
 
 - **Image:**
 - REDHAt: ami-007c3072df8eb6584
