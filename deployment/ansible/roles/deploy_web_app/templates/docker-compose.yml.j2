@@ -1,6 +1,4 @@
 ---
-version: '3.8'
-
 services:
   web:
     image: ghcr.io/banigoden/web_app-ghcr:v{{ IMAGE_VERSION }}
@@ -12,9 +10,9 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=3306
-      - DB_NAME=mydatabase
-      - DB_USER=root
-      - DB_PASSWORD=mysecretpassword
+      - DB_NAME= mydatabase
+      - DB_USER= {{ db_user }}
+      - DB_PASSWORD= mysecretpassword
     networks:
       - app-network
 

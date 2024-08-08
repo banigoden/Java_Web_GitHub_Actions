@@ -1,11 +1,18 @@
 ---
-exclude_paths: []
-
-skip_list: []
-
+exclude_paths:
+  - ./deployment/ansible/collections/ansible_collections/
+skip_list:
+  - yaml
+  - '204'  # linelength - Checked by yamllint
+  - '703'  # license
+  - 'fqcn-builtins'
+  - yaml[indentation]
 use_default_rules: true
 verbosity: 0
 warn_list:
   - internal-error  # Unexpected internal error
 
-mock_modules: []
+mock_modules:
+  - community.docker.docker_login
+  - community.docker.docker_compose_v2
+  - community.docker.docker_container_info

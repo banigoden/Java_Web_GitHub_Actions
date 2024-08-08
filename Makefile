@@ -1,4 +1,4 @@
-.PHONY: init clean create-env
+.PHONY: init clean
 
 init:
 	poetry install --no-root
