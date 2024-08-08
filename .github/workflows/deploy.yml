@@ -56,7 +56,10 @@ env:
   IMAGE_NAME: 'web_app-ghcr'
   TF_VAR_IMAGE_VERSION: ${{github.run_number}}
   TF_VAR_ENVIRONMENT: ${{ inputs.job_environment }}
-  TOKEN: ${{ secrets.TOKEN_GITHUB }}
+  TF_VAR_db_user: ${{ secrets.WORK_DB_USER }}
+  TF_VAR_db_pass: ${{ secrets.WORK_DB_PASS }}
+  TF_VAR_db_name: ${{ secrets.WORK_DB_NAME }}
+  ANSIBLE_VAR_TOKEN: ${{ secrets.TOKEN_GITHUB }}
   BRANCH_NAME: ${{ github.ref_name }}
 
 jobs:
