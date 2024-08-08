@@ -1,6 +1,4 @@
 ---
-version: '3.8'
-
 services:
   web:
     image: ghcr.io/banigoden/web_app-ghcr:v{{ IMAGE_VERSION }}
@@ -12,9 +10,9 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=3306
-      - DB_NAME= {{ db_name }}
+      - DB_NAME= mydatabase
       - DB_USER= {{ db_user }}
-      - DB_PASSWORD= {{ db_pass }}
+      - DB_PASSWORD= mysecretpassword
     networks:
       - app-network
 
@@ -22,10 +20,10 @@ services:
     image: mysql:8.0
     container_name: mysql_db
     environment:
-      MYSQL_ROOT_PASSWORD: {{ db_pass }}
-      MYSQL_DATABASE: {{ db_name }}
-      MYSQL_USER: {{ db_name }}
-      MYSQL_PASSWORD: {{ db_pass }}
+      MYSQL_ROOT_PASSWORD: mysecretpassword
+      MYSQL_DATABASE: mydatabase
+      MYSQL_USER: root
+      MYSQL_PASSWORD: mysecretpassword
     ports:
       - "3306:3306"
     networks:
