@@ -1,3 +1,57 @@
+# ---
+# - name: Install Nginx
+#   ansible.builtin.dnf:
+#     name: nginx
+#     state: present
+#     update_cache: true
+#   tags: ["nginx"]
+
+# - name: Create Nginx directories
+#   ansible.builtin.file:
+#     path: "{{ item }}"
+#     state: directory
+#     owner: root
+#     group: root
+#     mode: '0755'
+#   loop:
+#     - /etc/nginx/sites-available
+#     - /etc/nginx/sites-enabled
+#   tags: ["nginx"]
+
+# - name: Deploy main nginx.conf
+#   ansible.builtin.template:
+#     src: nginx.conf.j2
+#     dest: /etc/nginx/nginx.conf
+#     owner: root
+#     group: root
+#     mode: '0644'
+#   notify: Restart_nginx
+#   tags: ["nginx"]
+
+# - name: Deploy example.com Nginx virtual host
+#   ansible.builtin.template:
+#     src: example.com.conf.j2
+#     dest: /etc/nginx/sites-available/example.com.conf
+#     owner: root
+#     group: root
+#     mode: '0644'
+#   notify: Restart_nginx
+#   tags: ["nginx"]
+
+# - name: Enable example.com site by creating symlink
+#   ansible.builtin.file:
+#     src: /etc/nginx/sites-available/example.com.conf
+#     dest: /etc/nginx/sites-enabled/example.com.conf
+#     state: link
+#     force: true
+#   notify: Restart_nginx
+#   tags: ["nginx"]
+
+# - name: Ensure Nginx is running and enabled
+#   ansible.builtin.service:
+#     name: nginx
+#     state: started
+#     enabled: true
 ---
 - name: Install Nginx
   ansible.builtin.dnf:
@@ -6,44 +60,14 @@
     update_cache: true
   tags: ["nginx"]
 
-- name: Create Nginx directories
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: root
-    group: root
-    mode: '0755'
-  loop:
-    - /etc/nginx/sites-available
-    - /etc/nginx/sites-enabled
-  tags: ["nginx"]
-
-- name: Deploy main nginx.conf
+- name: Create Nginx configuration file
   ansible.builtin.template:
     src: nginx.conf.j2
-    dest: /etc/nginx/nginx.conf
+    dest: /etc/nginx/conf.d/default.conf
     owner: root
     group: root
     mode: '0644'
-  notify: Restart_nginx
-  tags: ["nginx"]
-
-- name: Deploy example.com Nginx virtual host
-  ansible.builtin.template:
-    src: example.com.conf.j2
-    dest: /etc/nginx/sites-available/example.com.conf
-    owner: root
-    group: root
-    mode: '0644'
-  notify: Restart_nginx
-  tags: ["nginx"]
-
-- name: Enable example.com site by creating symlink
-  ansible.builtin.file:
-    src: /etc/nginx/sites-available/example.com.conf
-    dest: /etc/nginx/sites-enabled/example.com.conf
-    state: link
-    force: true
+  register: nginx_conf
   notify: Restart_nginx
   tags: ["nginx"]
 

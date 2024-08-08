@@ -1,23 +1,11 @@
-# roles/nginx/templates/example.com.conf.j2
-upstream my_proxy {
-    server 127.0.0.1:8080 max_fails=2 fail_timeout=2s;
-    keepalive 2;
-}
-
+# roles/nginx/templates/nginx.conf.j2
 server {
     listen 80;
-    server_name example.com www.example.com;
-    return 301 https://$host$request_uri;
-}
 
-server {
-    listen 443 ssl;
-    server_name example.com www.example.com;
-    ssl_certificate /etc/nginx/certificates/full.chain.crt;
-    ssl_certificate_key /etc/nginx/certificates/server.key;
+    server_name ;
 
     location / {
-        proxy_pass http://my_proxy/;
+        proxy_pass http://localhost:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
