@@ -8,9 +8,7 @@ application locally. Notably, it incorporates Grype, an open-source tool,
 for Docker image vulnerability scanning, ensuring a secure and automated
 deployment pipeline.
 This repository facilitates the deployment of a web application into
-preferred Linux VMs. Typical uses would be deployment to Kubernetes,
-demos of Docker, CI/CD (build pipelines are provided), deployment to
-cloud (AWS) monitoring.
+preferred Linux VMs.
 It takes ~5-6 min to deploy Web App Server.
 
 ## Requirements
