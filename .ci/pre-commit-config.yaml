@@ -41,7 +41,7 @@ repos:
     rev: v0.1.23
     hooks:
       - id: terraform-fmt
-      # - id: terraform-validate
+      - id: terraform-validate
       - id: tflint
 
    # Docker hooks
