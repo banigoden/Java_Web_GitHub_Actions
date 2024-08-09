@@ -20,7 +20,7 @@ case $region_choice in
 3) echo "::set-output name=region::eu-centeral-1" ;;
 *) echo "Invalid choice"; exit 1 ;;
 esac
-export REGION
+export AWS_REGION
 
 echo "Choose VM size:
 1) t2.micro

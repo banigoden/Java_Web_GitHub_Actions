@@ -43,7 +43,7 @@
 
 - name: Install Docker Compose
   ansible.builtin.get_url:
-    url: https://github.com/docker/compose/releases/download/v2.13.0/docker-compose-Linux-x86_64
+    url: https://github.com/docker/compose/releases/download/v{{ install_docker_compose_version }}/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
     mode: '0754'
 
@@ -67,3 +67,15 @@
   notify:
     - Daemon_reload
     - Restart_docker
+
+- name: Add user to Docker group
+  ansible.builtin.user:
+    name: ec2-user
+    groups: docker
+    append: true
+
+- name: Ensure Docker service is started
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: true

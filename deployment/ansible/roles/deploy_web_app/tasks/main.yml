@@ -5,12 +5,6 @@
     state: started
     enabled: true
 
-- name: Add user to Docker group
-  ansible.builtin.user:
-    name: ec2-user
-    groups: docker
-    append: true
-
 - name: Create folder
   ansible.builtin.file:
     path: "{{ deploy_web_app_install_path }}"

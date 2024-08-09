@@ -1,16 +1,10 @@
 ---
-- name: Ensure Docker service is started
-  ansible.builtin.systemd:
-    name: docker
-    state: started
-    enabled: true
-
 - name: Log into Github  # noqa: args[module]
   become: true
   community.docker.docker_login:
     registry: ghcr.io
     username: "{{ docker_username }}"
-    password: "{{ lookup('env', 'ANSIBLE_VAR_TOKEN') }}"
+    password: "{{ lookup('env', 'DOCKER_PASSWORD') }}"
     reauthorize: true
   tags: ["docker", "redeploy"]
 

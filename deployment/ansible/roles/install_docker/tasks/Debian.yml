@@ -43,3 +43,9 @@
     owner: root
     group: root
     mode: '0644'
+
+- name: Ensure Docker service is started
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: true

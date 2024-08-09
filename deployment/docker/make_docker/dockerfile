@@ -1,0 +1,18 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y \
+    make \
+    wget \
+    python3-pip \
+    awscli && \
+    pip3 install --upgrade pip && \
+    pip3 install ansible
+
+ENV TZ=Europe/London
+
+WORKDIR /workspace
+
+CMD [ "bash" ]

@@ -10,25 +10,17 @@ services:
     environment:
       - DB_HOST=db
       - DB_PORT=3306
-      - DB_NAME= mydatabase
-      - DB_USER= {{ db_user }}
-      - DB_PASSWORD= mysecretpassword
-    networks:
-      - app-network
+      - DB_NAME= dbs
+      - DB_USER= root
+      - DB_PASSWORD= test
 
   db:
     image: mysql:8.0
     container_name: mysql_db
     environment:
-      MYSQL_ROOT_PASSWORD: mysecretpassword
-      MYSQL_DATABASE: mydatabase
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dbs
       MYSQL_USER: root
-      MYSQL_PASSWORD: mysecretpassword
+      MYSQL_PASSWORD: test
     ports:
       - "3306:3306"
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
