@@ -85,14 +85,6 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
 
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v6
-      #   with:
-      #     context: ./deployment/docker
-      #     push: true
-      #     tags: ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v${{ github.run.number }}
-      #     labels: ${{ steps.meta.outputs.labels }}
-
       - name: Build Docker image
         id: build-and-push
         uses: docker/build-push-action@v3
@@ -124,6 +116,9 @@ jobs:
 
       # - name: Use custom Docker image
       #   uses: docker://ghcr.io/banigoden/makeansible:latest
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
