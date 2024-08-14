@@ -29,7 +29,7 @@ resource "aws_instance" "web_app" {
 
   tags = {
     Environment = var.ENVIRONMENT
-    Name        = "web-production"
+    Name        = var.instance_name
   }
 }
 
