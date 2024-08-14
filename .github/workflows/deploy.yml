@@ -91,6 +91,18 @@ jobs:
           context: ./deployment/docker
           push: true
           tags: ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v${{ github.run.number }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Build Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v3
+        with:
+            context: .
+            push: true
+            tags: ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
+            labels: |
+              org.opencontainers.image.source=https://github.com/banigoden/your-repo
+              org.opencontainers.image.version=${{ github.run_number }}
 
       - name: Scan the Docker image with Grype
         uses: anchore/scan-action@v3.3.6
