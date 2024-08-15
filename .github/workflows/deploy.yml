@@ -66,11 +66,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
-    container:
-      image: docker:24.0.5-dind
-      env:
-        registry-username: ${{ secrets.DOCKER_USERNAME }}
-        registry-password: ${{ secrets.DOCKER_PASSWORD }}
+    # container:
+    #   image: docker:24.0.5-dind
+    #   env:
+    #     registry-username: ${{ secrets.DOCKER_USERNAME }}
+    #     registry-password: ${{ secrets.DOCKER_PASSWORD }}
 
     steps:
       - name: Checkout repository
@@ -98,7 +98,7 @@ jobs:
           push: true
           tags: ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
           labels: |
-            org.opencontainers.image.source=https://github.com/banigoden/
+            org.opencontainers.image.source=https://github.com/banigoden/Python_Web_GitHub_Actions
             org.opencontainers.image.version=${{ github.run_number }}
 
       - name: Scan the Docker image with Grype
