@@ -66,10 +66,17 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+    container:
+      image: ghcr.io/banigoden/make_docker:latest
+      env:
+        registry-username: ${{ secrets.DOCKER_USERNAME }}
+        registry-password: ${{ secrets.DOCKER_PASSWORD }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.6.0
+        with:
+          fetch-depth: 0
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -89,12 +96,12 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-            context: ./deployment/docker
-            push: true
-            tags: ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
-            labels: |
-              org.opencontainers.image.source=https://github.com/banigoden/your-repo
-              org.opencontainers.image.version=${{ github.run_number }}
+          context: ./deployment/docker
+          push: true
+          tags: ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/banigoden/Python_Web_GitHub_Actions
+            org.opencontainers.image.version=${{ github.run_number }}
 
       - name: Scan the Docker image with Grype
         uses: anchore/scan-action@v3.3.6
@@ -104,15 +111,15 @@ jobs:
           output-format: table
           only-fixed: true
 
-      - name: Install make, tfmask, ansible and AWS CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y make wget
-          sudo wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
-          sudo chmod 755 /usr/bin/tfmask
-          sudo apt-get install -y awscli
-          python -m pip install --upgrade pip
-          pip install ansible
+      # - name: Install make, tfmask, ansible and AWS CLI
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install -y make wget
+      #     sudo wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
+      #     sudo chmod 755 /usr/bin/tfmask
+      #     sudo apt-get install -y awscli
+      #     python -m pip install --upgrade pip
+      #     pip install ansible
 
       # - name: Use custom Docker image
       #   uses: docker://ghcr.io/banigoden/makeansible:latest
@@ -156,5 +163,5 @@ jobs:
 
       - name: Run Ansible Playbook
         # yamllint disable-line rule:line-length
-        run: ANSIBLE_HOST_KEY_CHECKING=False poetry run ansible-playbook playbook.yml --private-key EC2-web_app.pem -i inventory/ansible-inventory --user ec2-user
+        run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --private-key EC2-web_app.pem -i inventory/ansible-inventory --user ec2-user
         working-directory: deployment/ansible
