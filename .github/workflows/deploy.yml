@@ -67,7 +67,7 @@ jobs:
     permissions:
       packages: write
     container:
-      image: docker:24.0.5-dind
+      image: docker24.0-conf:v1.0.0
       env:
         registry-username: ${{ secrets.DOCKER_USERNAME }}
         registry-password: ${{ secrets.DOCKER_PASSWORD }}
@@ -75,8 +75,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3.6.0
-        # with:
-        #   fetch-depth: 0
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
