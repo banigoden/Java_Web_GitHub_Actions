@@ -67,10 +67,10 @@ jobs:
     permissions:
       packages: write
     container:
-      image: ghcr.io/banigoden/make_docker:latest
+      image: docker:24.0.5-dind
       env:
-        registry-username: ${{github.actor}}
-        registry-password: ${{secrets.GITHUB_TOKEN}}
+        registry-username: ${{ secrets.DOCKER_USERNAME }}
+        registry-password: ${{ secrets.DOCKER_PASSWORD }}
 
     steps:
       - name: Checkout repository
