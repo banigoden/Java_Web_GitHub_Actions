@@ -69,8 +69,8 @@ jobs:
     container:
       image: ghcr.io/banigoden/make_docker:latest
       env:
-        registry-username: ${{ secrets.DOCKER_USERNAME }}
-        registry-password: ${{ secrets.DOCKER_PASSWORD }}
+        registry-username: ${{github.actor}}
+        registry-password: ${{secrets.GITHUB_TOKEN}}
 
     steps:
       - name: Checkout repository
