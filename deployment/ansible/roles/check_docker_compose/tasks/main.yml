@@ -4,7 +4,7 @@
   community.docker.docker_login:
     registry: ghcr.io
     username: "{{ docker_username }}"
-    password: "{{ lookup('env', 'DOCKER_PASSWORD') }}"
+    password: "{{ lookup('env', 'ANSIBLE_VAR_TOKEN') }}"
     reauthorize: true
   tags: ["docker", "redeploy"]
 

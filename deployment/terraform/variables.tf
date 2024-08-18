@@ -43,12 +43,13 @@ variable "aws_region" {
 variable "ENVIRONMENT" {
   description = "Deployment environment (e.g., dev, prod)"
   type        = string
+  default     = "dev"
 }
 
 variable "IMAGE_VERSION" {
   description = "Version of the Docker image"
   type        = string
-  default     = "55"
+  default     = "73"
 }
 
 variable "docker_username" {
