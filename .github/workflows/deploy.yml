@@ -109,19 +109,6 @@ jobs:
           output-format: table
           only-fixed: true
 
-      # - name: Install make, tfmask, ansible and AWS CLI
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y make wget
-      #     sudo wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
-      #     sudo chmod 755 /usr/bin/tfmask
-      #     sudo apt-get install -y awscli
-      #     python -m pip install --upgrade pip
-      #     pip install ansible
-
-      # - name: Use custom Docker image
-      #   uses: docker://ghcr.io/banigoden/makeansible:latest
-
       - name: Install Poetry
         uses: snok/install-poetry@v1
 
