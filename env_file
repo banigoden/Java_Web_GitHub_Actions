@@ -47,7 +47,7 @@ export TF_VAR_REGION=$region
 
 echo "Input git token here: "
 read -s -r git_token
-export TOKEN_GITHUB=$git_token
+export DOCKER_PASSWORD=$git_token
 
 echo "Input db user: "
 read -s -r db_user
