@@ -1,7 +1,7 @@
 ---
 - name: Create nginx user
   ansible.builtin.user:
-    name: "{{ nginx_user }}"
+    name: nginx-user
     system: true
     create_home: false
   tags: ["nginx"]
@@ -23,19 +23,22 @@
   register: nginx_conf
   tags: ["nginx"]
 
-- name: Create Nginx site configuration file
-  ansible.builtin.template:
-    src: "{{ install_config_nginx_site_name }}.conf.j2"
-    dest: /etc/nginx/sites-available/
+- name: Ensure Nginx site directories exist
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
     owner: root
     group: root
-    mode: '0644'
+    mode: '0755'
+  loop:
+    - /etc/nginx/sites-available
+    - /etc/nginx/sites-enabled
   tags: ["nginx"]
 
 - name: Create Nginx site configuration file
   ansible.builtin.template:
     src: default.conf.j2
-    dest: /etc/nginx/sites-available/{{ install_config_nginx_site_name }}.conf
+    dest: /etc/nginx/sites-available/default.conf
     owner: root
     group: root
     mode: '0644'
@@ -43,8 +46,8 @@
 
 - name: Ensure symlink is present in sites-enabled
   ansible.builtin.file:
-    src: /etc/nginx/sites-available/{{ install_config_nginx_site_name }}.conf
-    dest: /etc/nginx/sites-enabled/{{ install_config_nginx_site_name }}.conf
+    src: /etc/nginx/sites-available/default.conf
+    dest: /etc/nginx/sites-enabled/default.conf
     state: link
   notify: Restart_nginx
   tags: ["nginx"]
