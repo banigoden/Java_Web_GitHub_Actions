@@ -11,16 +11,16 @@ services:
       - DB_HOST=db
       - DB_PORT=3306
       - DB_NAME= {{ db_name }}
-      - DB_USER= root
-      - DB_PASSWORD= test
+      - DB_USER= {{ db_user }}
+      - DB_PASSWORD= {{ db_pass }}
 
   db:
     image: mysql:8.0
     container_name: mysql_db
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: {{ db_pass }}
       MYSQL_DATABASE: dbs
-      MYSQL_USER: root
-      MYSQL_PASSWORD: test
+      MYSQL_USER: {{ db_user }}
+      MYSQL_PASSWORD: {{ db_pass }}
     ports:
       - "3306:3306"
