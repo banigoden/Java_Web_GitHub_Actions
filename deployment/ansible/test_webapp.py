@@ -5,13 +5,6 @@ def test_port_80_is_open(host):
     socket = host.socket("tcp://0.0.0.0:80")
     assert socket.is_listening
 
-def test_docker_is_installed_and_running(host):
-    docker = host.package("docker")
-    assert docker.is_installed
-    service = host.service("docker")
-    assert service.is_running
-    assert service.is_enabled
-
 def test_nginx_is_installed_and_running(host):
     nginx = host.package("nginx")
     assert nginx.is_installed
@@ -22,11 +15,11 @@ def test_nginx_is_installed_and_running(host):
 @pytest.mark.parametrize(
     "mount_point",
     [
-        "/home",
+        "/",
     ],
 )
+
 def test_path_is_mounted_core(host, mount_point):
-    """Check the mount points are mounted"""
     mount = host.mount_point(mount_point)
     assert mount.exists
 

@@ -154,13 +154,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest testinfra
+          pip install pytest pytest-testinfra testinfra
 
       - name: Run pytest for web_app
         run: |
           pytest --connection=ansible \
-                 --ansible-inventory=inventory/ansible-inventory \
-                 --private-key=EC2-web_app.pem \
-                 --user=ec2-user \
-                 -tb short -v deployment/python_pytest/test_*.py
+          --ansible-inventory=inventory/ansible-inventory \
+          --tb=short -v test_webapp.py
         working-directory: deployment/ansible

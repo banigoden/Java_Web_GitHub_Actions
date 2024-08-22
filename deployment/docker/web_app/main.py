@@ -5,6 +5,7 @@ items = []
 items_id = 1
 
 @app.get('/')
+@app.head('/')
 def root():
     return {'message': 'Hello World'}
 
