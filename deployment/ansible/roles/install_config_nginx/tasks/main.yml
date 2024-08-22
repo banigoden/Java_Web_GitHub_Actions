@@ -37,7 +37,7 @@
 
 - name: Create Nginx site configuration file
   ansible.builtin.template:
-    src: default.conf.j2
+    src: myapp.conf.j2
     dest: /etc/nginx/sites-available/myapp.conf
     owner: root
     group: root
