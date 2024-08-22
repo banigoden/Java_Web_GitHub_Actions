@@ -8,6 +8,10 @@ items_id = 1
 def root():
     return {'message': 'Hello World'}
 
+@app.get('/home')
+def root():
+    return {'message': 'Main page'}
+
 @app.get('/items')
 def get_item(item_id: int):
     try:

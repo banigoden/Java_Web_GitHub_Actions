@@ -9,7 +9,7 @@ RUN apt-get update && \
     python3-pip \
     awscli && \
     pip3 install --upgrade pip && \
-    pip3 install ansible && \
+    pip3 install ansible pytest testinfra && \
     curl -sSL https://install.python-poetry.org | python3 - \
     apt-get clean && \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

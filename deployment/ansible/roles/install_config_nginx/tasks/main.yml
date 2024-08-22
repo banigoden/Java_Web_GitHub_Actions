@@ -38,7 +38,7 @@
 - name: Create Nginx site configuration file
   ansible.builtin.template:
     src: default.conf.j2
-    dest: /etc/nginx/sites-available/default.conf
+    dest: /etc/nginx/sites-available/myapp.conf
     owner: root
     group: root
     mode: '0644'
@@ -46,8 +46,8 @@
 
 - name: Ensure symlink is present in sites-enabled
   ansible.builtin.file:
-    src: /etc/nginx/sites-available/default.conf
-    dest: /etc/nginx/sites-enabled/default.conf
+    src: /etc/nginx/sites-available/myapp.conf
+    dest: /etc/nginx/sites-enabled/myapp.conf
     state: link
   notify: Restart_nginx
   tags: ["nginx"]

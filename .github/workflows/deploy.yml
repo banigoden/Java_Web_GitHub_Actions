@@ -150,3 +150,17 @@ jobs:
         # yamllint disable-line rule:line-length
         run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --private-key EC2-web_app.pem -i inventory/ansible-inventory --user ec2-user
         working-directory: deployment/ansible
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest testinfra
+
+      - name: Run pytest for web_app
+        run: |
+          pytest --connection=ansible \
+                 --ansible-inventory=inventory/ansible-inventory \
+                 --private-key=EC2-web_app.pem \
+                 --user=ec2-user \
+                 -tb short -v deployment/python_pytest/test_*.py
+        working-directory: deployment/ansible
