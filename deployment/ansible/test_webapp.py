@@ -24,6 +24,6 @@ def test_path_is_mounted_core(host, mount_point):
     assert mount.exists
 
 def test_app_is_responding(host):
-    response = requests.get("http://localhost:8080")
+    response = requests.get("http://localhost:80")   # nginx port, not docker
     assert response.status_code == 200
     assert "Hello World" in response.text
