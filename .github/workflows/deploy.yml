@@ -47,27 +47,30 @@ on: # yamllint disable-line rule:truthy
         type: string
         description: 'Input db password'
         required: true
-        default: 'mysecretpassword'
+        default: 'dppass'
 
 env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AWS_REGION: 'eu-central-1'
   IMAGE_NAME: 'web_app-ghcr'
   TF_VAR_IMAGE_VERSION: ${{github.run_number}}
   TF_VAR_ENVIRONMENT: ${{ inputs.job_environment }}
   TF_VAR_db_user: ${{ secrets.WORK_DB_USER }}
   TF_VAR_db_pass: ${{ secrets.WORK_DB_PASS }}
   TF_VAR_db_name: ${{ secrets.WORK_DB_NAME }}
-  ANSIBLE_VAR_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+  DOCKER_PASSWORD: ${{ secrets.TOKEN_GITHUB }}
   BRANCH_NAME: ${{ github.ref_name }}
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       packages: write
+    # container:
+    #   image: docker:24.0.5-dind
+    #   env:
+    #     registry-username: ${{ secrets.DOCKER_USERNAME }}
+    #     registry-password: ${{ secrets.DOCKER_PASSWORD }}
 
     steps:
       - name: Checkout repository
@@ -75,12 +78,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
         run: docker build -t ${{ env.IMAGE_NAME }}:v${{ env.IMAGE_VERSION }} .
@@ -93,11 +90,16 @@ jobs:
           username: ${{github.actor}}
           password: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Push Docker Image to Registry
-        run: |
-          cd deployment/docker \
-          && docker build . -t ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v$GITHUB_RUN_NUMBER
-          docker push ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v$GITHUB_RUN_NUMBER
+      - name: Build Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v3
+        with:
+          context: ./deployment/docker
+          push: true
+          tags: ghcr.io/banigoden/${{ env.IMAGE_NAME }}:v${{ github.run_number }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/banigoden/Python_Web_GitHub_Actions
+            org.opencontainers.image.version=${{ github.run_number }}
 
       - name: Scan the Docker image with Grype
         uses: anchore/scan-action@v3.3.6
@@ -107,15 +109,8 @@ jobs:
           output-format: table
           only-fixed: true
 
-      - name: Install make, tfmask, ansible and AWS CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y make wget
-          sudo wget https://github.com/cloudposse/tfmask/releases/download/0.7.0/tfmask_linux_amd64 -O /usr/bin/tfmask
-          sudo chmod 755 /usr/bin/tfmask
-          sudo apt-get install -y awscli
-          python -m pip install --upgrade pip
-          pip install ansible
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
 
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v3
@@ -123,7 +118,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ github.event.inputs.region }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -154,4 +149,16 @@ jobs:
       - name: Run Ansible Playbook
         # yamllint disable-line rule:line-length
         run: ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbook.yml --private-key EC2-web_app.pem -i inventory/ansible-inventory --user ec2-user
+        working-directory: deployment/ansible
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-testinfra testinfra
+
+      - name: Run pytest for web_app
+        run: |
+          pytest --connection=ansible \
+          --ansible-inventory=inventory/ansible-inventory \
+          --tb=short -v test_webapp.py
         working-directory: deployment/ansible

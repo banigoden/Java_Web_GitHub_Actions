@@ -5,8 +5,13 @@ items = []
 items_id = 1
 
 @app.get('/')
+@app.head('/')
 def root():
     return {'message': 'Hello World'}
+
+@app.get('/home')
+def root():
+    return {'message': 'Main page'}
 
 @app.get('/items')
 def get_item(item_id: int):

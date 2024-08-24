@@ -1,3 +1,7 @@
+provider "aws" {
+  region = var.aws_region
+}
+
 resource "tls_private_key" "ec2_key" {
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -24,8 +28,7 @@ resource "aws_instance" "web_app" {
   associate_public_ip_address = true
 
   tags = {
-    Environment = var.ENVIRONMENT
-    Name        = "web-production"
+    Name = "${var.instance_name}-${var.ENVIRONMENT}"
   }
 }
 

@@ -49,7 +49,7 @@ variable "ENVIRONMENT" {
 variable "IMAGE_VERSION" {
   description = "Version of the Docker image"
   type        = string
-  default     = "43"
+  default     = "73"
 }
 
 variable "docker_username" {

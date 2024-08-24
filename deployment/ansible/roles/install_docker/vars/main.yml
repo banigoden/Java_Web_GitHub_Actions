@@ -42,3 +42,8 @@ install_docker_pip_modules_red:
   - docker-compose
   - pymysql
   - pipenv
+
+install_docker_compose_base_url: "https://github.com/docker/compose/releases/download"
+install_docker_compose_version: "2.20.0"
+# yamllint disable-line rule:line-length
+install_docker_compose_url: "{{ install_docker_compose_base_url }}/v{{ install_docker_compose_version }}/docker-compose-Linux-x86_64"

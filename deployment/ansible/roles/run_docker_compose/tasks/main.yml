@@ -1,23 +1,17 @@
 ---
-- name: Ensure Docker service is started
-  ansible.builtin.systemd:
-    name: docker
-    state: started
-    enabled: true
-
 - name: Log into Github  # noqa: args[module]
   become: true
   community.docker.docker_login:
     registry: ghcr.io
     username: "{{ docker_username }}"
-    password: "{{ lookup('env', 'ANSIBLE_VAR_TOKEN') }}"
+    password: "{{ lookup('env', 'DOCKER_PASSWORD') }}"
     reauthorize: true
   tags: ["docker", "redeploy"]
 
 - name: Check Docker Compose stack
   ansible.builtin.shell:
     cmd: "docker compose ps --filter status=running --services"
-    chdir: "{{ check_docker_compose_install_path }}"
+    chdir: "{{ run_docker_compose_install_path }}"
   args:
     executable: /bin/bash
   register: stack_state
@@ -26,6 +20,6 @@
 
 - name: Deploy Docker Compose stack  # noqa: args[module]
   community.docker.docker_compose_v2:
-    project_src: "{{ check_docker_compose_install_path }}"
+    project_src: "{{ run_docker_compose_install_path }}"
   register: output
   tags: ["docker", "redeploy"]
